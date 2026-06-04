@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Usuarios.aspx.cs" Inherits="CallCenterTPC.Usuarios" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Prioridades.aspx.cs" Inherits="CallCenterTPC.Prioridades" %>
 
 <!DOCTYPE html>
 

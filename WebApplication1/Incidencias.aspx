@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Incidencias.aspx.cs" Inherits="WebApplication1.Incidencias" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Incidencias.aspx.cs" Inherits="CallCenterTPC.Incidencias" %>
 
 <!DOCTYPE html>
 

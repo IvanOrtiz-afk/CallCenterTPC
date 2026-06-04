@@ -11,7 +11,7 @@ namespace CallCenterTPC
 {
 
 
-    public partial class Usuarios
+    public partial class Prioridades
     {
 
         /// <summary>

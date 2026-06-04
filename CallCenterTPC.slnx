@@ -1,3 +1,6 @@
 <Solution>
+  <Folder Name="/Elementos de la solución/">
+    <File Path=".gitignore" />
+  </Folder>
   <Project Path="WebApplication1/CallCenterTPC.csproj" Id="117ee8db-09f2-42ad-be9f-45baabb62ae6" />
 </Solution>

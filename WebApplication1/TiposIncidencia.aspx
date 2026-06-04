@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Usuarios.aspx.cs" Inherits="CallCenterTPC.Usuarios" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TiposIncidencia.aspx.cs" Inherits="WebApplication1.TiposIncidencia" %>
 
 <!DOCTYPE html>
 
@@ -10,7 +10,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <h2>Gestión de Usuarios</h2>
+            <h2>Tipos de Incidencias</h2>
         </div>
     </form>
 </body>

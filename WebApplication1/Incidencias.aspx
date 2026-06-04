@@ -10,6 +10,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            <h2>Incidencias</h2>
         </div>
     </form>
 </body>

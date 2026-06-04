@@ -179,6 +179,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="TiposIncidencia.aspx" />
     <Content Include="Usuarios.aspx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -241,6 +242,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="TiposIncidencia.aspx.cs">
+      <DependentUpon>TiposIncidencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TiposIncidencia.aspx.designer.cs">
+      <DependentUpon>TiposIncidencia.aspx</DependentUpon>
     </Compile>
     <Compile Include="Usuarios.aspx.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>

@@ -203,13 +203,6 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Dominio\Cliente.cs" />
-    <Compile Include="Dominio\EstadoIncidencia.cs" />
-    <Compile Include="Dominio\Incidencia.cs" />
-    <Compile Include="Dominio\Perfil.cs" />
-    <Compile Include="Dominio\Prioridad.cs" />
-    <Compile Include="Dominio\TipoIncidencia.cs" />
-    <Compile Include="Dominio\Usuario.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -272,6 +265,12 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\dominio\dominio.csproj">
+      <Project>{354f7ac2-f5cb-4c5c-96ce-d1d7cbb061b1}</Project>
+      <Name>dominio</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

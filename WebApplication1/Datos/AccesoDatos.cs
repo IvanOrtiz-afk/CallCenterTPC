@@ -18,7 +18,7 @@ namespace CallCenterTPC.Datos
         public AccesoDatos()
         {
             conexion = new SqlConnection(
-                ConfigurationManager.ConnectionStrings["CallCenterDB"].ConnectionString);
+                ConfigurationManager.ConnectionStrings["sql_callcenter"].ConnectionString);
             comando = new SqlCommand();
         }
 

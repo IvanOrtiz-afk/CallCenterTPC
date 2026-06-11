@@ -13,7 +13,7 @@ namespace CallCenterTPC.Dominio
 
         public string Apellido { get; set; }
 
-        public string DNI { get; set; }
+        public string documento { get; set; }
 
         public string Email { get; set; }
 

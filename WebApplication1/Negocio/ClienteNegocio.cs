@@ -22,13 +22,13 @@ namespace CallCenterTPC.Negocio
                 {
                     Cliente aux = new Cliente();
 
-                    aux.Id = (int)datos.Lector["Id"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Apellido = (string)datos.Lector["Apellido"];
-                    aux.DNI = (string)datos.Lector["DNI"];
-                    aux.Email = (string)datos.Lector["Email"];
-                    aux.Telefono = (string)datos.Lector["Telefono"];
-                    aux.Activo = (bool)datos.Lector["Activo"];
+                    aux.id = (int)datos.Lector["id"];
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.apellido = (string)datos.Lector["apellido"];
+                    aux.documento = (int)datos.Lector["documento"];
+                    aux.email = (string)datos.Lector["email"];
+                    aux.telefono = (int)datos.Lector["telefono"];
+                    aux.activo = (bool)datos.Lector["activo"];
 
                     lista.Add(aux);
                 }

@@ -195,7 +195,6 @@
     <Compile Include="Clientes.aspx.designer.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Datos\AccesoDatos.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -253,6 +252,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Datos\" />
     <Folder Include="Recursos\" />
   </ItemGroup>
   <ItemGroup>
@@ -267,6 +267,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\datos\datos.csproj">
+      <Project>{d586c268-52db-42e5-9289-c393541d0c17}</Project>
+      <Name>datos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\dominio\dominio.csproj">
       <Project>{354f7ac2-f5cb-4c5c-96ce-d1d7cbb061b1}</Project>
       <Name>dominio</Name>

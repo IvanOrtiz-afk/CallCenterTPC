@@ -14,7 +14,7 @@ namespace CallCenterTPC.Negocio
 
             try
             {
-                datos.setearConsulta("SELECT Id, Nombre, Apellido, DNI, Email, Telefono, Activo FROM Clientes");
+                datos.setearConsulta("SELECT Id, Nombre, Apellido, documento, Email, Telefono, Activo FROM Clientes");
 
                 datos.ejecutarLectura();
 
@@ -25,7 +25,7 @@ namespace CallCenterTPC.Negocio
                     aux.Id = (int)datos.Lector["Id"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Apellido = (string)datos.Lector["Apellido"];
-                    aux.DNI = (string)datos.Lector["DNI"];
+                    aux.documento = (string)datos.Lector["DNI"];
                     aux.Email = (string)datos.Lector["Email"];
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Activo = (bool)datos.Lector["Activo"];

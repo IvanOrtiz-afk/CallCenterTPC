@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using System.Data.SqlClient;
 
@@ -28,21 +28,48 @@ namespace CallCenterTPC.Datos
             comando.CommandText = consulta;
         }
 
+        public void setearParametro(string nombre, object valor)
+        {
+            comando.Parameters.AddWithValue(nombre, valor);
+        }
+
         public void ejecutarLectura()
         {
             comando.Connection = conexion;
 
-            conexion.Open();
+            try
+            {
+                conexion.Open();
+                lector = comando.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
-            lector = comando.ExecuteReader();
+        public void ejecutarAccion()
+        {
+            comando.Connection = conexion;
+
+            try
+            {
+                conexion.Open();
+                comando.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void cerrarConexion()
         {
-            if (lector != null)
+            if (lector != null && !lector.IsClosed)
                 lector.Close();
 
-            conexion.Close();
+            if (conexion.State == System.Data.ConnectionState.Open)
+                conexion.Close();
         }
     }
 }

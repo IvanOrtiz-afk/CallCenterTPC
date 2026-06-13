@@ -2,7 +2,7 @@
   <Folder Name="/Elementos de la solución/">
     <File Path=".gitignore" />
   </Folder>
-  <Project Path="datos/negocio.csproj" Id="ce1dd0bf-a272-4f14-a17c-0d7d01fb908c" />
+  <Project Path="datos/datos.csproj" Id="d586c268-52db-42e5-9289-c393541d0c17" />
   <Project Path="dominio/dominio.csproj" Id="354f7ac2-f5cb-4c5c-96ce-d1d7cbb061b1" />
   <Project Path="WebApplication1/CallCenterTPC.csproj" Id="117ee8db-09f2-42ad-be9f-45baabb62ae6" />
 </Solution>

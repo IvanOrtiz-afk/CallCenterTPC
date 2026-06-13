@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using CallCenterTPC.Negocio;
+using CallCenterTPC.Utilidades;
+using CallCenterTPC.Datos;
 
 namespace CallCenterTPC
 {
@@ -12,11 +8,12 @@ namespace CallCenterTPC
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Mostrar mensaje de éxito si venimos de registrar uno
+            AlertaHelper.CargarMensajeRedirigido(pnlMensaje, lblMensaje);
+
             if (!IsPostBack)
             {
-                ClienteNegocio negocio = new ClienteNegocio();
-
-                dgvClientes.DataSource = negocio.listar();
+                dgvClientes.DataSource = new ClienteRepositorio().Listar();
                 dgvClientes.DataBind();
             }
         }

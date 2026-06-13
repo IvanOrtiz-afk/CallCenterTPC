@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using CallCenterTPC.Datos;
+using CallCenterTPC.Utilidades;
+using System;
 
 namespace CallCenterTPC
 {
@@ -11,7 +8,19 @@ namespace CallCenterTPC
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            AlertaHelper.CargarMensajeRedirigido(pnlMensaje, lblMensaje);
 
+            if (!IsPostBack)
+            {
+                CargarGrilla();
+            }
+        }
+
+        private void CargarGrilla()
+        {
+            // Asumo que tu UsuarioRepositorio tiene un método Listar()
+            dgvUsuarios.DataSource = new UsuarioRepositorio().Listar();
+            dgvUsuarios.DataBind();
         }
     }
 }

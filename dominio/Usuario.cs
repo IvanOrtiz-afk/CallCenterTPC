@@ -7,18 +7,13 @@ namespace CallCenterTPC.Dominio
 {
     public class Usuario
     {
-        public int Id { get; set; }
-
-        public string Nombre { get; set; }
-
-        public string Apellido { get; set; }
-
-        public string Email { get; set; }
-
-        public string Password { get; set; }
-
-        public Perfil Perfil { get; set; }
-
-        public bool Activo { get; set; }
+        public int id { get; set; }
+        public string nombre { get; set; }
+        public string apellido { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
+        public int rolId { get; set; }
+        public bool activo { get; set; }
+        public DateTime fechaCreacion { get; set; }
     }
 }

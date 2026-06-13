@@ -30,12 +30,29 @@
                 AutoGenerateColumns="False" GridLines="None">
                 <HeaderStyle CssClass="table-dark" />
                 <Columns>
-                    <asp:BoundField DataField="id" HeaderText="ID" />
-                    <asp:BoundField DataField="nombre" HeaderText="Nombre" />
-                    <asp:BoundField DataField="apellido" HeaderText="Apellido" />
-                    <asp:BoundField DataField="email" HeaderText="Email" />
-                    <asp:BoundField DataField="rolId" HeaderText="Rol ID" />
-                </Columns>
+
+    <asp:BoundField DataField="id" HeaderText="ID" />
+    <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+    <asp:BoundField DataField="apellido" HeaderText="Apellido" />
+    <asp:BoundField DataField="email" HeaderText="Email" />
+    <asp:BoundField DataField="rolId" HeaderText="Rol ID" />
+
+    <asp:TemplateField HeaderText="Acciones">
+        <ItemTemplate>
+
+            <asp:LinkButton
+                ID="btnEliminar"
+                runat="server"
+                Text="Eliminar"
+                CssClass="btn btn-danger btn-sm"
+                CommandArgument='<%# Eval("id") %>'
+                OnClick="btnEliminar_Click"
+                OnClientClick="return confirm('¿Está seguro que desea dar de baja este usuario?');" />
+
+        </ItemTemplate>
+    </asp:TemplateField>
+
+</Columns>
             </asp:GridView>
         </div>
     </div>

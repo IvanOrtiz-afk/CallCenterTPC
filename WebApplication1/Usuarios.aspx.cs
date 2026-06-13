@@ -1,6 +1,7 @@
 ﻿using CallCenterTPC.Datos;
 using CallCenterTPC.Utilidades;
 using System;
+using System.Web.UI.WebControls;
 
 namespace CallCenterTPC
 {
@@ -8,12 +9,31 @@ namespace CallCenterTPC
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["Usuario"] == null)
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
             AlertaHelper.CargarMensajeRedirigido(pnlMensaje, lblMensaje);
 
             if (!IsPostBack)
             {
                 CargarGrilla();
             }
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            LinkButton boton = (LinkButton)sender;
+
+            int id = int.Parse(boton.CommandArgument);
+
+            UsuarioRepositorio repo = new UsuarioRepositorio();
+
+            repo.Eliminar(id);
+
+            CargarGrilla();
         }
 
         private void CargarGrilla()

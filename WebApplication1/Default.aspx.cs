@@ -12,7 +12,11 @@ namespace CallCenterTPC
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-          
+            if (Session["Usuario"] == null)
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
             AlertaHelper.CargarMensajeRedirigido(pnlMensaje, lblMensaje);
         }
     }

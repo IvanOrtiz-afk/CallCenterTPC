@@ -46,6 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccesoDatos.cs" />
+    <Compile Include="TipoIncidenciaRepositorio.cs" />
+    <Compile Include="IncidenciaHistoricoRepositorio.cs" />
+    <Compile Include="EstadoIncidenciaRepositorio.cs" />
+    <Compile Include="RolRepositorio.cs" />
+    <Compile Include="PrioridadRepositorio.cs" />
+    <Compile Include="IncidenciaRepositorio.cs" />
+    <Compile Include="UsuarioRepositorio.cs" />
     <Compile Include="ClienteRepositorio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

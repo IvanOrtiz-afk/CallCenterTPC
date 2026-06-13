@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using CallCenterTPC.Utilidades;
+using CallCenterTPC.Datos;
 
 namespace CallCenterTPC
 {
@@ -11,6 +13,13 @@ namespace CallCenterTPC
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            AlertaHelper.CargarMensajeRedirigido(pnlMensaje, lblMensaje);
+
+            if (!IsPostBack)
+            {
+                dgvPrioridades.DataSource = new PrioridadRepositorio().Listar();
+                dgvPrioridades.DataBind();
+            }
 
         }
     }

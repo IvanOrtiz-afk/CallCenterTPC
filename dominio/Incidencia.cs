@@ -8,32 +8,24 @@ namespace CallCenterTPC.Dominio
 {
     public class Incidencia
     {
-        public int Id { get; set; }
+        public int id { get; set; }
+        public int clienteId { get; set; }
+        // AGREGA ESTAS PROPIEDADES DE OBJETO:
+        public Cliente cliente { get; set; }
+        public TipoIncidencia tipoIncidencia { get; set; }
+        public Prioridad prioridad { get; set; }
+        public EstadoIncidencia estado { get; set; }
 
-        public string NumeroReclamo { get; set; }
-
-        public Cliente Cliente { get; set; }
-
-        public TipoIncidencia TipoIncidencia { get; set; }
-
-        public Prioridad Prioridad { get; set; }
-
-        public EstadoIncidencia Estado { get; set; }
-
-        public Usuario UsuarioCreador { get; set; }
-
-        public Usuario UsuarioAsignado { get; set; }
-
-        public string Descripcion { get; set; }
-
-        public DateTime FechaAlta { get; set; }
-
-        public DateTime? FechaResolucion { get; set; }
-
-        public string ComentarioResolucion { get; set; }
-
-        public DateTime? FechaCierre { get; set; }
-
-        public string ComentarioCierre { get; set; }
+        public int tipoIncidenciaId { get; set; }
+        public int prioridadId { get; set; }
+        public int estadoId { get; set; }
+        public int usuarioCreadorId { get; set; }
+        public int usuarioAsignadoId { get; set; }
+        public string descripcion { get; set; }
+        public string comentarioCierre { get; set; }
+        public string comentarioResolucion { get; set; }
+        public DateTime fechaAlta { get; set; }
+        public DateTime? fechaResolucion { get; set; }
+        public DateTime? fechaCierre { get; set; }
     }
 }

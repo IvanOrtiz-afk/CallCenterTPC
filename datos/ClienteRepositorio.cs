@@ -6,7 +6,47 @@ namespace CallCenterTPC.Datos
 {
     public class ClienteRepositorio
     {
-        public void Crear(Cliente cliente)
+
+        public List<Cliente> Listar()
+        {
+            List<Cliente> lista = new List<Cliente>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                // Traemos todos los campos mapeados en la tabla clientes
+                datos.setearConsulta("SELECT id, nombre, apellido, documento, email, telefono, activo, fecha_creacion FROM [clientes]");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Cliente aux = new Cliente();
+
+                    aux.id = (int)datos.Lector["id"];
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.apellido = (string)datos.Lector["apellido"];
+                    aux.documento = (int)datos.Lector["documento"];
+                    aux.email = (string)datos.Lector["email"];
+                    aux.telefono = (int)datos.Lector["telefono"];
+                    aux.activo = (bool)datos.Lector["activo"];
+                    aux.fechaCreacion = (DateTime)datos.Lector["fecha_creacion"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al intentar listar los clientes: " + ex.Message);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void Agregar(Cliente cliente)
         {
             AccesoDatos datos = new AccesoDatos();
 
@@ -21,13 +61,13 @@ namespace CallCenterTPC.Datos
                 datos.setearParametro("@documento", cliente.documento);
                 datos.setearParametro("@email", cliente.email);
                 datos.setearParametro("@telefono", cliente.telefono);
-                // activo lo puse en 1 y la fecha_creacion en GETDATE() directo en el SQL
+               
 
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
-                throw ex; // O manejar el error según la arquitectura de tu app
+                throw ex;
             }
             finally
             {
@@ -35,9 +75,7 @@ namespace CallCenterTPC.Datos
             }
         }
 
-        // ==========================================
-        // MODIFICACIÓN (Update)
-        // ==========================================
+        
         public void Actualizar(Cliente cliente)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -70,9 +108,7 @@ namespace CallCenterTPC.Datos
             }
         }
 
-        // ==========================================
-        // BAJA LÓGICA (Soft Delete)
-        // ==========================================
+     
         public void DarDeBaja(int id)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -93,9 +129,7 @@ namespace CallCenterTPC.Datos
             }
         }
 
-        // ==========================================
-        // LECTURA (Read All)
-        // ==========================================
+        
         public List<Cliente> ObtenerTodos()
         {
             List<Cliente> lista = new List<Cliente>();
@@ -110,13 +144,13 @@ namespace CallCenterTPC.Datos
                 {
                     Cliente aux = new Cliente();
 
-                    // Mapeo manual de la base de datos al objeto C#
+                 
                     aux.id = (int)datos.Lector["id"];
                     aux.nombre = (string)datos.Lector["nombre"];
                     aux.apellido = (string)datos.Lector["apellido"];
                     aux.documento = (int)datos.Lector["documento"];
 
-                    // Validación por si algún string viene nulo (muy buena práctica en BD)
+                  
                     if (!(datos.Lector["email"] is DBNull))
                         aux.email = (string)datos.Lector["email"];
 

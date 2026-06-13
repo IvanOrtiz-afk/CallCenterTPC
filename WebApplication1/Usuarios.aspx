@@ -1,17 +1,42 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Usuarios.aspx.cs" Inherits="CallCenterTPC.Usuarios" %>
+﻿<%@ Page Title="Gestión de Usuarios" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Usuarios.aspx.cs" Inherits="CallCenterTPC.Usuarios" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
-            <h2>Gestión de Usuarios</h2>
+       <asp:Panel ID="Panel1" runat="server" Visible="false">
+        <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </asp:Panel>
+    
+    <div class="row align-items-center mt-4 mb-4">
+        <div class="col-md-6">
+            <h3><span class="material-symbols-outlined align-text-bottom me-2">manage_accounts</span>Usuarios</h3>
         </div>
-    </form>
-</body>
-</html>
+        <div class="col-md-6 text-md-end">
+            <a href="FormUsuarios.aspx" class="btn btn-dark shadow-sm">
+                <span class="material-symbols-outlined align-text-bottom me-1">add_circle</span>
+                Nuevo Usuario
+            </a>
+        </div>
+    </div>
+
+    <asp:Panel ID="pnlMensaje" runat="server" Visible="false">
+        <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </asp:Panel>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <asp:GridView ID="dgvUsuarios" runat="server" CssClass="table table-striped table-hover mb-0" 
+                AutoGenerateColumns="False" GridLines="None">
+                <HeaderStyle CssClass="table-dark" />
+                <Columns>
+                    <asp:BoundField DataField="id" HeaderText="ID" />
+                    <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+                    <asp:BoundField DataField="apellido" HeaderText="Apellido" />
+                    <asp:BoundField DataField="email" HeaderText="Email" />
+                    <asp:BoundField DataField="rolId" HeaderText="Rol ID" />
+                </Columns>
+            </asp:GridView>
+        </div>
+    </div>
+</asp:Content>

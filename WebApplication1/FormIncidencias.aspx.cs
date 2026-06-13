@@ -55,6 +55,7 @@ namespace CallCenterTPC
             catch (Exception ex)
             {
                 // Manejar el error (ej: mostrar un mensaje en pantalla)
+                AlertaHelper.MostrarAlerta(pnlMensaje,lblMensaje,"Error al cargar los datos: " + ex.Message,true);
             }
         }
 
@@ -73,8 +74,12 @@ namespace CallCenterTPC
 
                 // En un sistema real, este ID se tomaría de la sesión del usuario logueado.
                 // Por ahora lo forzamos a 1 (o el ID que tengas en tu tabla usuarios).
-                nuevaIncidencia.usuarioCreadorId = 1;
-                nuevaIncidencia.usuarioAsignadoId = 1; // O 0/null si nace sin asignar
+                Usuario usuario = (Usuario)Session["Usuario"];
+
+                nuevaIncidencia.usuarioCreadorId = usuario.id;
+                nuevaIncidencia.usuarioAsignadoId = usuario.id;
+
+                // O 0/null si nace sin asignar -MODIFICADO- ahora la incidencia queda asociada al usuario logueado
 
                 nuevaIncidencia.descripcion = txtDescripcion.Text;
 

@@ -12,6 +12,11 @@ namespace CallCenterTPC
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["Usuario"] == null)
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
             // Solo cargamos la grilla la primera vez que entra a la página, 
             // no cuando hace PostBack (por ejemplo, si hubiera botones adentro de la grilla)
             if (!IsPostBack)
@@ -36,6 +41,7 @@ namespace CallCenterTPC
             {
                 // En un escenario real, podrías mostrar un cartel de error aquí
                 // Por ejemplo, usando un panel similar al que armamos en la creación de clientes.
+                throw new Exception("Error al cargar los tipos de incidencia: " + ex.Message);
             }
         }
     }

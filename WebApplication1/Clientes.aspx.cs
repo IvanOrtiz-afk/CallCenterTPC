@@ -18,7 +18,7 @@ namespace CallCenterTPC
 
             if (!IsPostBack)
             {
-                dgvClientes.DataSource = new ClienteRepositorio().Listar();
+                dgvClientes.DataSource = new ClienteRepositorio().ObtenerTodos();
                 dgvClientes.DataBind();
             }
         }

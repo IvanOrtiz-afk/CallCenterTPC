@@ -26,10 +26,20 @@ namespace CallCenterTPC.Datos
                     aux.nombre = (string)datos.Lector["nombre"];
                     aux.apellido = (string)datos.Lector["apellido"];
                     aux.documento = (int)datos.Lector["documento"];
-                    aux.email = (string)datos.Lector["email"];
-                    aux.telefono = (int)datos.Lector["telefono"];
+
+                    
+                    if (!(datos.Lector["email"] is DBNull))
+                        aux.email = (string)datos.Lector["email"];
+
+                   
+                    if (!(datos.Lector["telefono"] is DBNull))
+                        aux.telefono = Convert.ToInt32(datos.Lector["telefono"]);
+
                     aux.activo = (bool)datos.Lector["activo"];
-                    aux.fechaCreacion = (DateTime)datos.Lector["fecha_creacion"];
+
+                    
+                    if (!(datos.Lector["fecha_creacion"] is DBNull))
+                        aux.fechaCreacion = (DateTime)datos.Lector["fecha_creacion"];
 
                     lista.Add(aux);
                 }
@@ -143,19 +153,22 @@ namespace CallCenterTPC.Datos
                 {
                     Cliente aux = new Cliente();
 
-                 
                     aux.id = (int)datos.Lector["id"];
                     aux.nombre = (string)datos.Lector["nombre"];
                     aux.apellido = (string)datos.Lector["apellido"];
                     aux.documento = (int)datos.Lector["documento"];
 
-                  
                     if (!(datos.Lector["email"] is DBNull))
                         aux.email = (string)datos.Lector["email"];
 
-                    aux.telefono = (int)datos.Lector["telefono"];
+                    // ACÁ ESTÁ EL ARREGLO: Convertimos el varchar de SQL al int de C#
+                    if (!(datos.Lector["telefono"] is DBNull))
+                        aux.telefono = Convert.ToInt32(datos.Lector["telefono"]);
+
                     aux.activo = (bool)datos.Lector["activo"];
-                    aux.fechaCreacion = (DateTime)datos.Lector["fecha_creacion"];
+
+                    if (!(datos.Lector["fecha_creacion"] is DBNull))
+                        aux.fechaCreacion = (DateTime)datos.Lector["fecha_creacion"];
 
                     lista.Add(aux);
                 }

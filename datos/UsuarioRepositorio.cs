@@ -167,5 +167,71 @@ namespace CallCenterTPC.Datos
                 datos.cerrarConexion();
             }
         }
+
+        public Usuario ObtenerPorId(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(
+                    "SELECT id, nombre, apellido, email, password, rol_id, activo, fecha_creacion " +
+                    "FROM usuarios WHERE id = @id");
+
+                datos.setearParametro("@id", id);
+
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Usuario aux = new Usuario();
+
+                    aux.id = (int)datos.Lector["id"];
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.apellido = (string)datos.Lector["apellido"];
+                    aux.email = (string)datos.Lector["email"];
+                    aux.password = (string)datos.Lector["password"];
+                    aux.rolId = (int)datos.Lector["rol_id"];
+                    aux.activo = (bool)datos.Lector["activo"];
+                    aux.fechaCreacion = (DateTime)datos.Lector["fecha_creacion"];
+
+                    return aux;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener usuario: " + ex.Message);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public bool ExisteEmail(string email) //no deja duplicar email
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(
+                    "SELECT id FROM usuarios WHERE email = @email");
+
+                datos.setearParametro("@email", email);
+
+                datos.ejecutarLectura();
+
+                return datos.Lector.Read();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al validar email: " + ex.Message);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

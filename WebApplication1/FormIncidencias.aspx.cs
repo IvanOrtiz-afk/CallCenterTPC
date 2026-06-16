@@ -10,6 +10,11 @@ namespace CallCenterTPC
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!SeguridadHelper.HaySesion())
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
             // El IsPostBack evita que los desplegables se recarguen de la BD al hacer click en Guardar
             if (!IsPostBack)
             {
@@ -21,40 +26,39 @@ namespace CallCenterTPC
         {
             try
             {
-                // Instanciamos los repositorios
-                // NOTA: Asumo que ya tienes un ClienteRepositorio y PrioridadRepositorio con el método Listar()
+                // arrancamos los repos
                 TipoIncidenciaRepositorio tipoRepo = new TipoIncidenciaRepositorio();
                 EstadoIncidenciaRepositorio estadoRepo = new EstadoIncidenciaRepositorio();
                 PrioridadRepositorio prioridadRepo = new PrioridadRepositorio();
                 ClienteRepositorio clienteRepo = new ClienteRepositorio(); 
 
-                // --- Cargar Tipos ---
+                // tipos
                 ddlTipos.DataSource = tipoRepo.Listar();
                 ddlTipos.DataTextField = "nombre"; // Lo que ve el usuario
                 ddlTipos.DataValueField = "id";    // El ID que se guarda en la BD
                 ddlTipos.DataBind();
 
-                // --- Cargar Estados ---
+                // estados
                 ddlEstados.DataSource = estadoRepo.Listar();
                 ddlEstados.DataTextField = "nombre";
                 ddlEstados.DataValueField = "id";
                 ddlEstados.DataBind();
 
-                // --- Cargar Prioridades ---
+                // prioridades
                 ddlPrioridades.DataSource = prioridadRepo.Listar();
                 ddlPrioridades.DataTextField = "nombre";
                 ddlPrioridades.DataValueField = "id";
                 ddlPrioridades.DataBind();
 
-                // --- Cargar Clientes ---
+                // clientes
                  ddlClientes.DataSource = clienteRepo.Listar();
-                 ddlClientes.DataTextField = "nombre"; // Podrías armar una propiedad que devuelva Nombre + Apellido
+                 ddlClientes.DataTextField = "nombre"; 
                  ddlClientes.DataValueField = "id";
                  ddlClientes.DataBind();
             }
             catch (Exception ex)
             {
-                // Manejar el error (ej: mostrar un mensaje en pantalla)
+                // si salta un error lo notifica
                 AlertaHelper.MostrarAlerta(pnlMensaje,lblMensaje,"Error al cargar los datos: " + ex.Message,true);
             }
         }
@@ -63,36 +67,45 @@ namespace CallCenterTPC
         {
             try
             {
-                Incidencia nuevaIncidencia = new Incidencia();
-                IncidenciaRepositorio repo = new IncidenciaRepositorio();
+                if (string.IsNullOrWhiteSpace(txtDescripcion.Text))
+                {
+                    AlertaHelper.MostrarAlerta(
+                        pnlMensaje,
+                        lblMensaje,
+                        "Debe ingresar una descripción.",
+                        true);
 
-                // Capturamos los valores de los DropDownList convirtiéndolos a enteros
+                    return;
+                }
+
+                Usuario usuario = SeguridadHelper.UsuarioActual();
+
+                Incidencia nuevaIncidencia = new Incidencia();
+
                 nuevaIncidencia.clienteId = int.Parse(ddlClientes.SelectedValue);
                 nuevaIncidencia.tipoIncidenciaId = int.Parse(ddlTipos.SelectedValue);
                 nuevaIncidencia.prioridadId = int.Parse(ddlPrioridades.SelectedValue);
                 nuevaIncidencia.estadoId = int.Parse(ddlEstados.SelectedValue);
 
-                // En un sistema real, este ID se tomaría de la sesión del usuario logueado.
-                // Por ahora lo forzamos a 1 (o el ID que tengas en tu tabla usuarios).
-                Usuario usuario = (Usuario)Session["Usuario"];
-
                 nuevaIncidencia.usuarioCreadorId = usuario.id;
                 nuevaIncidencia.usuarioAsignadoId = usuario.id;
 
-                // O 0/null si nace sin asignar -MODIFICADO- ahora la incidencia queda asociada al usuario logueado
-
                 nuevaIncidencia.descripcion = txtDescripcion.Text;
 
-                // Llamamos al repositorio para que ejecute el INSERT
-                repo.Agregar(nuevaIncidencia);
+                new IncidenciaRepositorio().Agregar(nuevaIncidencia);
 
+                AlertaHelper.GuardarMensajeExito(
+                    "Incidencia creada con éxito.");
 
-                AlertaHelper.GuardarMensajeExito("Incidencia creada con éxito.");
                 Response.Redirect("Incidencias.aspx", false);
             }
             catch (Exception ex)
             {
-                AlertaHelper.MostrarAlerta(pnlMensaje, lblMensaje, ex.Message, true);
+                AlertaHelper.MostrarAlerta(
+                    pnlMensaje,
+                    lblMensaje,
+                    ex.Message,
+                    true);
             }
         }
     }

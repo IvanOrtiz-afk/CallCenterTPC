@@ -1,53 +1,120 @@
 ﻿using CallCenterTPC.Datos;
+using CallCenterTPC.Utilidades;
+using CallCenterTPC.Dominio;
 using System;
-
 
 namespace CallCenterTPC
 {
     public partial class FormClientes : System.Web.UI.Page
     {
-       
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!SeguridadHelper.HaySesion())
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+        }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             try
             {
-                // 1. Ocultamos el panel de error al intentar guardar nuevamente
                 pnlError.Visible = false;
 
-                CallCenterTPC.Dominio.Cliente nuevoCliente = new CallCenterTPC.Dominio.Cliente();
+                // validaciones
+
+                if (string.IsNullOrWhiteSpace(txtNombre.Text))
+                {
+                    lblError.Text = "Debe ingresar un nombre.";
+                    pnlError.Visible = true;
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtApellido.Text))
+                {
+                    lblError.Text = "Debe ingresar un apellido.";
+                    pnlError.Visible = true;
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtEmail.Text))
+                {
+                    lblError.Text = "Debe ingresar un email.";
+                    pnlError.Visible = true;
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtDocumento.Text))
+                {
+                    lblError.Text = "Debe ingresar un documento.";
+                    pnlError.Visible = true;
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtTelefono.Text))
+                {
+                    lblError.Text = "Debe ingresar un teléfono.";
+                    pnlError.Visible = true;
+                    return;
+                }
+
+                int documento;
+
+                if (!int.TryParse(txtDocumento.Text, out documento))
+                {
+                    lblError.Text = "El documento debe contener solamente números.";
+                    pnlError.Visible = true;
+                    return;
+                }
+
+                int telefono;
+
+                if (!int.TryParse(txtTelefono.Text, out telefono))
+                {
+                    lblError.Text = "El teléfono debe contener solamente números.";
+                    pnlError.Visible = true;
+                    return;
+                }
+
+                // se crea el cliente
+
                 ClienteRepositorio repo = new ClienteRepositorio();
+
+                if (repo.ExisteEmail(txtEmail.Text))
+                {
+                    lblError.Text = "Ya existe un cliente con ese email.";
+                    pnlError.Visible = true;
+                    return;
+                }
+
+                if (repo.ExisteDocumento(documento))
+                {
+                    lblError.Text = "Ya existe un cliente con ese documento.";
+                    pnlError.Visible = true;
+                    return;
+                }
+
+                Cliente nuevoCliente = new Cliente();
 
                 nuevoCliente.nombre = txtNombre.Text;
                 nuevoCliente.apellido = txtApellido.Text;
                 nuevoCliente.email = txtEmail.Text;
-
-                nuevoCliente.documento = int.Parse(txtDocumento.Text);
-                nuevoCliente.telefono = int.Parse(txtTelefono.Text);
+                nuevoCliente.documento = documento;
+                nuevoCliente.telefono = telefono;
                 nuevoCliente.activo = chkActivo.Checked;
 
                 repo.Agregar(nuevoCliente);
 
-                // 2. Guardamos el mensaje de éxito en la memoria temporal (Session)
-                Session["MensajeExito"] = $"¡El cliente {nuevoCliente.nombre} {nuevoCliente.apellido} se registró correctamente!";
+                Session["MensajeExito"] =
+                    $"¡El cliente {nuevoCliente.nombre} {nuevoCliente.apellido} se registró correctamente!";
 
-                // 3. Redirigimos al inicio
                 Response.Redirect("Clientes.aspx", false);
             }
             catch (Exception ex)
             {
-                // 4. Si hay un error, NO redirige. Hacemos visible el panel rojo y mostramos el error.
                 pnlError.Visible = true;
-
-                // Si es un error de formato (ej: dejó vacío un número), le damos un mensaje más amigable
-                if (ex is FormatException)
-                {
-                    lblError.Text = "Por favor, verifique que los campos de Documento y Teléfono contengan solo números.";
-                }
-                else
-                {
-                    lblError.Text = "Ocurrió un problema al guardar: " + ex.Message;
-                }
+                lblError.Text = "Ocurrió un problema al guardar: " + ex.Message;
             }
         }
     }

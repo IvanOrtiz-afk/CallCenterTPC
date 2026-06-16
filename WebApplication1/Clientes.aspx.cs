@@ -8,12 +8,12 @@ namespace CallCenterTPC
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Usuario"] == null)
+            if (!SeguridadHelper.HaySesion())
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
-            // Mostrar mensaje de éxito si venimos de registrar uno
+
             AlertaHelper.CargarMensajeRedirigido(pnlMensaje, lblMensaje);
 
             if (!IsPostBack)

@@ -47,19 +47,19 @@
         <li class="nav-item">
             <a class="nav-link" runat="server" href="~/Default.aspx">Inicio</a>
         </li>
-        <li class="nav-item">
+        <li id="liClientes" runat="server" class="nav-item">
             <a class="nav-link" runat="server" href="~/Clientes.aspx">Clientes</a>
         </li>
-        <li class="nav-item">
+        <li id="liUsuarios" runat="server" class="nav-item">
             <a class="nav-link" runat="server" href="~/Usuarios.aspx">Usuarios</a>
         </li>
-        <li class="nav-item">
+        <li id="liIncidencias" runat="server" class="nav-item">
             <a class="nav-link" runat="server" href="~/Incidencias.aspx">Incidencias</a>
         </li>
-        <li class="nav-item">
+        <li id="liPrioridades" runat="server" class="nav-item">
             <a class="nav-link" runat="server" href="~/Prioridades.aspx">Prioridades</a>
         </li>
-        <li class="nav-item">
+        <li id="liTiposIncidencia" runat="server" class="nav-item">
             <a class="nav-link" runat="server" href="~/TiposIncidencia.aspx">Tipos de Incidencia</a>
         </li>
       </ul>

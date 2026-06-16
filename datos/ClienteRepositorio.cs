@@ -129,7 +129,6 @@ namespace CallCenterTPC.Datos
             }
         }
 
-        
         public List<Cliente> ObtenerTodos()
         {
             List<Cliente> lista = new List<Cliente>();
@@ -166,6 +165,52 @@ namespace CallCenterTPC.Datos
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public bool ExisteEmail(string email)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT id FROM clientes WHERE email = @email");
+                datos.setearParametro("@email", email);
+
+                datos.ejecutarLectura();
+
+                return datos.Lector.Read();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al validar email: " + ex.Message);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public bool ExisteDocumento(int documento)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT id FROM clientes WHERE documento = @documento");
+                datos.setearParametro("@documento", documento);
+
+                datos.ejecutarLectura();
+
+                return datos.Lector.Read();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al validar documento: " + ex.Message);
             }
             finally
             {

@@ -1,4 +1,5 @@
 ﻿using CallCenterTPC.Datos;
+using CallCenterTPC.Dominio;
 using CallCenterTPC.Utilidades;
 using System;
 using System.Web.UI.WebControls;
@@ -9,9 +10,9 @@ namespace CallCenterTPC
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Usuario"] == null)
+            if (!SeguridadHelper.EsAdmin())
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("Default.aspx");
                 return;
             }
 
@@ -28,6 +29,19 @@ namespace CallCenterTPC
             LinkButton boton = (LinkButton)sender;
 
             int id = int.Parse(boton.CommandArgument);
+
+            Usuario usuarioActual = SeguridadHelper.UsuarioActual();
+
+            if (usuarioActual.id == id)
+            {
+                AlertaHelper.MostrarAlerta(
+                    pnlMensaje,
+                    lblMensaje,
+                    "No puedes darte de baja a tí mismo.", //sino un Admin podria darse de baja a el mismo (Buena practica)
+                    true);
+
+                return;
+            }
 
             UsuarioRepositorio repo = new UsuarioRepositorio();
 

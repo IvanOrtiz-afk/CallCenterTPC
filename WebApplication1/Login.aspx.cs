@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using CallCenterTPC.Datos;
 using CallCenterTPC.Dominio;
+using CallCenterTPC.Utilidades;
 
 namespace CallCenterTPC
 {
@@ -13,13 +10,31 @@ namespace CallCenterTPC
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Usuario"] != null)
+            if (SeguridadHelper.HaySesion())
+            {
                 Response.Redirect("Default.aspx");
+                return;
+            }
         }
+
         protected void btnIngresar_Click(object sender, EventArgs e)
         {
             try
             {
+                // Validaciones
+
+                if (string.IsNullOrWhiteSpace(txtEmail.Text))
+                {
+                    lblError.Text = "Debe ingresar un email";
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtPassword.Text))
+                {
+                    lblError.Text = "Debe ingresar una contraseña";
+                    return;
+                }
+
                 UsuarioRepositorio repo = new UsuarioRepositorio();
 
                 Usuario usuario = repo.ObtenerPorEmail(txtEmail.Text);
@@ -39,18 +54,6 @@ namespace CallCenterTPC
                 if (usuario.password != txtPassword.Text)
                 {
                     lblError.Text = "Contraseña incorrecta";
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(txtEmail.Text))
-                {
-                    lblError.Text = "Debe ingresar un email";
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(txtPassword.Text))
-                {
-                    lblError.Text = "Debe ingresar una contraseña";
                     return;
                 }
 

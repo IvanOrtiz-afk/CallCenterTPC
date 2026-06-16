@@ -298,6 +298,7 @@
       <DependentUpon>Usuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utilidades\AlertaHelper.cs" />
+    <Compile Include="Utilidades\SeguridadHelper.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

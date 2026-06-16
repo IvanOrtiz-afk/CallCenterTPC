@@ -14,7 +14,7 @@ namespace CallCenterTPC
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Usuario"] == null)
+            if (!SeguridadHelper.HaySesion())
             {
                 Response.Redirect("Login.aspx");
                 return;

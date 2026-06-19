@@ -1,18 +1,18 @@
-﻿<%@ Page Title="Nuevo Cliente" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FormClientes.aspx.cs" Inherits="CallCenterTPC.FormClientes" %>
+﻿<%@ Page Title="Formulario de Cliente" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FormClientes.aspx.cs" Inherits="CallCenterTPC.FormClientes" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="row justify-content-center mt-4">
         <div class="col-md-8">
             <div class="card shadow-sm">
+                
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">
                         <span class="material-symbols-outlined align-text-bottom me-2">person_add</span>
-                        Registrar Nuevo Cliente
+                        <asp:Label ID="lblTitulo" runat="server" Text="Registrar Nuevo Cliente"></asp:Label>
                     </h4>
                 </div>
+                
                 <div class="card-body">
-
-                    <div class="card-body">
                     
                     <asp:Panel ID="pnlError" runat="server" Visible="false" CssClass="alert alert-danger alert-dismissible fade show" role="alert">
                         <span class="material-symbols-outlined align-text-bottom me-2">error</span>
@@ -20,8 +20,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </asp:Panel>
 
-                    <div class="row">
-                    
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Nombre</label>
@@ -57,8 +55,9 @@
                         <div class="form-text">Si desmarca esta opción, el cliente se creará pero no podrá operar.</div>
                     </div>
 
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="Default.aspx" class="btn btn-outline-secondary">Cancelar</a>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="Clientes.aspx" class="btn btn-outline-secondary">Cancelar</a>
+                        <asp:Button ID="btnEliminar" runat="server" Text="Dar de Baja" CssClass="btn btn-danger me-auto" Visible="false" OnClick="btnEliminar_Click" OnClientClick="return confirm('¿Estás seguro de que deseas dar de baja este cliente?');" />
                         <asp:Button ID="btnGuardar" runat="server" Text="Guardar Cliente" CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
                     </div>
 

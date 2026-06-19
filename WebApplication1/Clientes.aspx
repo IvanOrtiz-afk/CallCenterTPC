@@ -7,7 +7,7 @@
             <h3><span class="material-symbols-outlined align-text-bottom me-2">group</span>Clientes</h3>
         </div>
         <div class="col-md-6 text-md-end">
-            <a href="Clientes.aspx" class="btn btn-primary shadow-sm">
+            <a href="FormClientes.aspx" class="btn btn-primary shadow-sm">
                 <span class="material-symbols-outlined align-text-bottom me-1">add_circle</span>
                 Nuevo Cliente
             </a>
@@ -17,7 +17,7 @@
     <asp:Panel ID="pnlMensaje" runat="server" Visible="false">
      <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
- </asp:Panel>
+    </asp:Panel>
 
     <div class="card shadow-sm">
         <div class="card-body p-0">
@@ -29,6 +29,13 @@
                     <asp:BoundField DataField="apellido" HeaderText="Apellido" />
                     <asp:BoundField DataField="documento" HeaderText="Documento" />
                     <asp:BoundField DataField="email" HeaderText="Email" />
+                    
+                    <asp:TemplateField HeaderText="Acciones">
+                        <ItemTemplate>
+                            <a href="FormClientes.aspx?id=<%# Eval("id") %>" class="btn btn-warning btn-sm">Modificar</a>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
                 </Columns>
             </asp:GridView>
         </div>

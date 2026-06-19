@@ -14,6 +14,31 @@ namespace CallCenterTPC
                 Response.Redirect("Login.aspx");
                 return;
             }
+
+           
+            if (!IsPostBack)
+            {
+                if (Request.QueryString["id"] != null)
+                {
+                    lblTitulo.Text = "Modificar Cliente";
+                    btnEliminar.Visible = true; 
+
+                    int id = int.Parse(Request.QueryString["id"]);
+                    ClienteRepositorio repo = new ClienteRepositorio();
+
+                    Cliente clienteSeleccionado = repo.Listar().Find(x => x.id == id);
+
+                    if (clienteSeleccionado != null)
+                    {
+                        txtNombre.Text = clienteSeleccionado.nombre;
+                        txtApellido.Text = clienteSeleccionado.apellido;
+                        txtDocumento.Text = clienteSeleccionado.documento.ToString();
+                        txtTelefono.Text = clienteSeleccionado.telefono.ToString();
+                        txtEmail.Text = clienteSeleccionado.email;
+                        chkActivo.Checked = clienteSeleccionado.activo;
+                    }
+                }
+            }
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -22,7 +47,7 @@ namespace CallCenterTPC
             {
                 pnlError.Visible = false;
 
-                // validaciones
+              
 
                 if (string.IsNullOrWhiteSpace(txtNombre.Text))
                 {
@@ -60,7 +85,6 @@ namespace CallCenterTPC
                 }
 
                 int documento;
-
                 if (!int.TryParse(txtDocumento.Text, out documento))
                 {
                     lblError.Text = "El documento debe contener solamente números.";
@@ -69,7 +93,6 @@ namespace CallCenterTPC
                 }
 
                 int telefono;
-
                 if (!int.TryParse(txtTelefono.Text, out telefono))
                 {
                     lblError.Text = "El teléfono debe contener solamente números.";
@@ -77,37 +100,74 @@ namespace CallCenterTPC
                     return;
                 }
 
-                // se crea el cliente
 
                 ClienteRepositorio repo = new ClienteRepositorio();
 
-                if (repo.ExisteEmail(txtEmail.Text))
+                // si hay un ID en la URL, estamos modificando. Si no, agregando.
+                if (Request.QueryString["id"] != null)
                 {
-                    lblError.Text = "Ya existe un cliente con ese email.";
-                    pnlError.Visible = true;
-                    return;
-                }
+                   
+                    int id = int.Parse(Request.QueryString["id"]);
+                    Cliente clienteOriginal = repo.Listar().Find(x => x.id == id);
 
-                if (repo.ExisteDocumento(documento))
+                    if (txtEmail.Text != clienteOriginal.email && repo.ExisteEmail(txtEmail.Text))
+                    {
+                        lblError.Text = "Ya existe otro cliente con ese email.";
+                        pnlError.Visible = true;
+                        return;
+                    }
+
+                    if (documento != clienteOriginal.documento && repo.ExisteDocumento(documento))
+                    {
+                        lblError.Text = "Ya existe otro cliente con ese documento.";
+                        pnlError.Visible = true;
+                        return;
+                    }
+
+                    Cliente clienteModificado = new Cliente();
+                    clienteModificado.id = id;
+                    clienteModificado.nombre = txtNombre.Text;
+                    clienteModificado.apellido = txtApellido.Text;
+                    clienteModificado.email = txtEmail.Text;
+                    clienteModificado.documento = documento;
+                    clienteModificado.telefono = telefono;
+                    clienteModificado.activo = chkActivo.Checked;
+
+                    repo.Actualizar(clienteModificado);
+
+                    
+                    Session["MensajeExito"] = $"¡El cliente {clienteModificado.nombre} {clienteModificado.apellido} se actualizó correctamente!";
+                }
+                else
                 {
-                    lblError.Text = "Ya existe un cliente con ese documento.";
-                    pnlError.Visible = true;
-                    return;
+                    
+                    if (repo.ExisteEmail(txtEmail.Text))
+                    {
+                        lblError.Text = "Ya existe un cliente con ese email.";
+                        pnlError.Visible = true;
+                        return;
+                    }
+
+                    if (repo.ExisteDocumento(documento))
+                    {
+                        lblError.Text = "Ya existe un cliente con ese documento.";
+                        pnlError.Visible = true;
+                        return;
+                    }
+
+                    Cliente nuevoCliente = new Cliente();
+                    nuevoCliente.nombre = txtNombre.Text;
+                    nuevoCliente.apellido = txtApellido.Text;
+                    nuevoCliente.email = txtEmail.Text;
+                    nuevoCliente.documento = documento;
+                    nuevoCliente.telefono = telefono;
+                    nuevoCliente.activo = chkActivo.Checked;
+
+                    repo.Agregar(nuevoCliente);
+
+                  
+                    Session["MensajeExito"] = $"¡El cliente {nuevoCliente.nombre} {nuevoCliente.apellido} se registró correctamente!";
                 }
-
-                Cliente nuevoCliente = new Cliente();
-
-                nuevoCliente.nombre = txtNombre.Text;
-                nuevoCliente.apellido = txtApellido.Text;
-                nuevoCliente.email = txtEmail.Text;
-                nuevoCliente.documento = documento;
-                nuevoCliente.telefono = telefono;
-                nuevoCliente.activo = chkActivo.Checked;
-
-                repo.Agregar(nuevoCliente);
-
-                Session["MensajeExito"] =
-                    $"¡El cliente {nuevoCliente.nombre} {nuevoCliente.apellido} se registró correctamente!";
 
                 Response.Redirect("Clientes.aspx", false);
             }
@@ -115,6 +175,28 @@ namespace CallCenterTPC
             {
                 pnlError.Visible = true;
                 lblError.Text = "Ocurrió un problema al guardar: " + ex.Message;
+            }
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Request.QueryString["id"] != null)
+                {
+                    int id = int.Parse(Request.QueryString["id"]);
+                    ClienteRepositorio repo = new ClienteRepositorio();
+
+                    repo.DarDeBaja(id);
+
+                    Session["MensajeExito"] = "¡El cliente fue dado de baja correctamente!";
+                    Response.Redirect("Clientes.aspx", false);
+                }
+            }
+            catch (Exception ex)
+            {
+                pnlError.Visible = true;
+                lblError.Text = "Ocurrió un problema al dar de baja: " + ex.Message;
             }
         }
     }

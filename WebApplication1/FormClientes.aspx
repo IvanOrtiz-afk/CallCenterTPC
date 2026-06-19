@@ -49,15 +49,11 @@
                         <asp:TextBox ID="txtEmail" runat="server" TextMode="Email" CssClass="form-control" placeholder="ejemplo@correo.com"></asp:TextBox>
                     </div>
 
-                    <div class="mb-4 form-check">
-                        <asp:CheckBox ID="chkActivo" runat="server" CssClass="form-check-input" Checked="true" />
-                        <label class="form-check-label" for="chkActivo">Cliente Activo</label>
-                        <div class="form-text">Si desmarca esta opción, el cliente se creará pero no podrá operar.</div>
-                    </div>
-
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                         <a href="Clientes.aspx" class="btn btn-outline-secondary">Cancelar</a>
-                        <asp:Button ID="btnEliminar" runat="server" Text="Dar de Baja" CssClass="btn btn-danger me-auto" Visible="false" OnClick="btnEliminar_Click" OnClientClick="return confirm('¿Estás seguro de que deseas dar de baja este cliente?');" />
+                        
+                        <asp:Button ID="btnEliminar" runat="server" Text="Dar de Baja" CssClass="btn btn-danger me-auto" Visible="false" OnClick="btnEliminar_Click" />
+                        
                         <asp:Button ID="btnGuardar" runat="server" Text="Guardar Cliente" CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
                     </div>
 

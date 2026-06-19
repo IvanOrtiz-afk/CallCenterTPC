@@ -15,13 +15,12 @@ namespace CallCenterTPC
                 return;
             }
 
-           
             if (!IsPostBack)
             {
                 if (Request.QueryString["id"] != null)
                 {
                     lblTitulo.Text = "Modificar Cliente";
-                    btnEliminar.Visible = true; 
+                    btnEliminar.Visible = true;
 
                     int id = int.Parse(Request.QueryString["id"]);
                     ClienteRepositorio repo = new ClienteRepositorio();
@@ -35,7 +34,38 @@ namespace CallCenterTPC
                         txtDocumento.Text = clienteSeleccionado.documento.ToString();
                         txtTelefono.Text = clienteSeleccionado.telefono.ToString();
                         txtEmail.Text = clienteSeleccionado.email;
-                        chkActivo.Checked = clienteSeleccionado.activo;
+
+                        // LÓGICA DEL BOTÓN INTELIGENTE
+                        if (clienteSeleccionado.activo)
+                        {
+                            // Cliente activo: Permite todo
+                            btnEliminar.Text = "Dar de baja";
+                            btnEliminar.CssClass = "btn btn-danger";
+
+                            btnEliminar.OnClientClick = "return confirm('¿Está seguro que desea dar de baja a este cliente?');";
+
+                            btnGuardar.Visible = true;
+                            txtNombre.Enabled = true;
+                            txtApellido.Enabled = true;
+                            txtDocumento.Enabled = true;
+                            txtTelefono.Enabled = true;
+                            txtEmail.Enabled = true;
+                        }
+                        else
+                        {
+                            // Cliente inactivo: Bloquea la edición
+                            btnEliminar.Text = "Reactivar cliente";
+                            btnEliminar.CssClass = "btn btn-success";
+
+                            btnEliminar.OnClientClick = "return confirm('¿Está seguro que desea reactivar a este cliente?');";
+
+                            btnGuardar.Visible = false;
+                            txtNombre.Enabled = false;
+                            txtApellido.Enabled = false;
+                            txtDocumento.Enabled = false;
+                            txtTelefono.Enabled = false;
+                            txtEmail.Enabled = false;
+                        }
                     }
                 }
             }
@@ -46,8 +76,6 @@ namespace CallCenterTPC
             try
             {
                 pnlError.Visible = false;
-
-              
 
                 if (string.IsNullOrWhiteSpace(txtNombre.Text))
                 {
@@ -100,13 +128,11 @@ namespace CallCenterTPC
                     return;
                 }
 
-
                 ClienteRepositorio repo = new ClienteRepositorio();
 
                 // si hay un ID en la URL, estamos modificando. Si no, agregando.
                 if (Request.QueryString["id"] != null)
                 {
-                   
                     int id = int.Parse(Request.QueryString["id"]);
                     Cliente clienteOriginal = repo.Listar().Find(x => x.id == id);
 
@@ -131,16 +157,16 @@ namespace CallCenterTPC
                     clienteModificado.email = txtEmail.Text;
                     clienteModificado.documento = documento;
                     clienteModificado.telefono = telefono;
-                    clienteModificado.activo = chkActivo.Checked;
+
+                    
+                    clienteModificado.activo = clienteOriginal.activo;
 
                     repo.Actualizar(clienteModificado);
 
-                    
                     Session["MensajeExito"] = $"¡El cliente {clienteModificado.nombre} {clienteModificado.apellido} se actualizó correctamente!";
                 }
                 else
                 {
-                    
                     if (repo.ExisteEmail(txtEmail.Text))
                     {
                         lblError.Text = "Ya existe un cliente con ese email.";
@@ -161,11 +187,12 @@ namespace CallCenterTPC
                     nuevoCliente.email = txtEmail.Text;
                     nuevoCliente.documento = documento;
                     nuevoCliente.telefono = telefono;
-                    nuevoCliente.activo = chkActivo.Checked;
+
+                    // Un cliente nuevo siempre nace activo
+                    nuevoCliente.activo = true;
 
                     repo.Agregar(nuevoCliente);
 
-                  
                     Session["MensajeExito"] = $"¡El cliente {nuevoCliente.nombre} {nuevoCliente.apellido} se registró correctamente!";
                 }
 
@@ -187,16 +214,27 @@ namespace CallCenterTPC
                     int id = int.Parse(Request.QueryString["id"]);
                     ClienteRepositorio repo = new ClienteRepositorio();
 
-                    repo.DarDeBaja(id);
+                   
+                    Cliente clienteTarget = repo.Listar().Find(x => x.id == id);
 
-                    Session["MensajeExito"] = "¡El cliente fue dado de baja correctamente!";
-                    Response.Redirect("Clientes.aspx", false);
+                    if (clienteTarget != null)
+                    {
+                       
+                        clienteTarget.activo = !clienteTarget.activo;
+
+                        
+                        repo.Actualizar(clienteTarget);
+
+                        string accion = clienteTarget.activo ? "reactivado" : "dado de baja";
+                        Session["MensajeExito"] = $"¡El cliente fue {accion} correctamente!";
+                        Response.Redirect("Clientes.aspx", false);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 pnlError.Visible = true;
-                lblError.Text = "Ocurrió un problema al dar de baja: " + ex.Message;
+                lblError.Text = "Ocurrió un problema al cambiar el estado: " + ex.Message;
             }
         }
     }

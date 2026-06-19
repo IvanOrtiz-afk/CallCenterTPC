@@ -21,6 +21,7 @@
 
     <div class="card shadow-sm">
         <div class="card-body p-0">
+            <asp:CheckBox ID="chkVerInactivos" runat="server" Text=" Mostrar clientes inactivos" AutoPostBack="true" OnCheckedChanged="chkVerInactivos_CheckedChanged" CssClass="mb-3" />
             <asp:GridView ID="dgvClientes" runat="server" CssClass="table table-striped table-hover mb-0" AutoGenerateColumns="False">
                 <HeaderStyle CssClass="table-dark" />
                 <Columns>
@@ -29,6 +30,7 @@
                     <asp:BoundField DataField="apellido" HeaderText="Apellido" />
                     <asp:BoundField DataField="documento" HeaderText="Documento" />
                     <asp:BoundField DataField="email" HeaderText="Email" />
+                    <asp:BoundField DataField="estadoTexto" HeaderText="Estado" />
                     
                     <asp:TemplateField HeaderText="Acciones">
                         <ItemTemplate>

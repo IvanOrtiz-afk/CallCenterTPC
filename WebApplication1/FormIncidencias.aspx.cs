@@ -1,8 +1,7 @@
 ﻿using CallCenterTPC.Datos;
-using CallCenterTPC.Dominio;     
+using CallCenterTPC.Dominio;
 using CallCenterTPC.Utilidades;
 using System;
-
 
 namespace CallCenterTPC
 {
@@ -30,12 +29,12 @@ namespace CallCenterTPC
                 TipoIncidenciaRepositorio tipoRepo = new TipoIncidenciaRepositorio();
                 EstadoIncidenciaRepositorio estadoRepo = new EstadoIncidenciaRepositorio();
                 PrioridadRepositorio prioridadRepo = new PrioridadRepositorio();
-                ClienteRepositorio clienteRepo = new ClienteRepositorio(); 
+                ClienteRepositorio clienteRepo = new ClienteRepositorio();
 
                 // tipos
                 ddlTipos.DataSource = tipoRepo.Listar();
-                ddlTipos.DataTextField = "nombre"; // Lo que ve el usuario
-                ddlTipos.DataValueField = "id";    // El ID que se guarda en la BD
+                ddlTipos.DataTextField = "nombre";
+                ddlTipos.DataValueField = "id";
                 ddlTipos.DataBind();
 
                 // estados
@@ -50,16 +49,16 @@ namespace CallCenterTPC
                 ddlPrioridades.DataValueField = "id";
                 ddlPrioridades.DataBind();
 
-                // clientes
-                 ddlClientes.DataSource = clienteRepo.Listar();
-                 ddlClientes.DataTextField = "nombre"; 
-                 ddlClientes.DataValueField = "id";
-                 ddlClientes.DataBind();
+                // clientes (Acá aplicamos los cambios)
+                ddlClientes.DataSource = clienteRepo.ObtenerTodos();
+                ddlClientes.DataTextField = "infoDesplegable";
+                ddlClientes.DataValueField = "id";
+                ddlClientes.DataBind();
             }
             catch (Exception ex)
             {
                 // si salta un error lo notifica
-                AlertaHelper.MostrarAlerta(pnlMensaje,lblMensaje,"Error al cargar los datos: " + ex.Message,true);
+                AlertaHelper.MostrarAlerta(pnlMensaje, lblMensaje, "Error al cargar los datos: " + ex.Message, true);
             }
         }
 

@@ -15,5 +15,22 @@ namespace CallCenterTPC.Dominio
         public int telefono { get; set; }
         public bool activo { get; set; }
         public DateTime fechaCreacion { get; set; }
+
+     
+        public string infoDesplegable
+        {
+            get
+            {
+                return id + " - " + nombre + " " + apellido + " (DNI: " + documento + ")";
+            }
+        }
+
+        public string estadoTexto
+        {
+            get
+            {
+                return activo ? "Activo" : "Dado de baja";
+            }
+        }
     }
 }

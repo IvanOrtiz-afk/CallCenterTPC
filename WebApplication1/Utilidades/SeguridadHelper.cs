@@ -18,6 +18,35 @@ namespace CallCenterTPC.Utilidades
             return UsuarioActual() != null;
         }
 
+        public static bool TienePermiso(string permiso)
+        {
+            Usuario usuario = UsuarioActual();
+
+            if (usuario == null)
+                return false;
+
+            switch (usuario.rolId)
+            {
+                // Administrador
+                case 1:
+                    return true;
+
+                // Coordinador
+                case 4:
+                    return permiso == Permisos.Clientes
+                        || permiso == Permisos.Incidencias
+                        || permiso == Permisos.ReasignarIncidencias;
+
+                // Agente
+                case 3:
+                    return permiso == Permisos.Clientes
+                        || permiso == Permisos.Incidencias;
+
+                default:
+                    return false;
+            }
+        }
+
         public static bool EsAdmin()
         {
             Usuario usuario = UsuarioActual();

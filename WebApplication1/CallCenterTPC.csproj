@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Clientes.aspx" />
+    <Content Include="DetalleIncidencia.aspx" />
     <Content Include="FormClientes.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -202,6 +203,13 @@
     <Compile Include="Clientes.aspx.designer.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DetalleIncidencia.aspx.cs">
+      <DependentUpon>DetalleIncidencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalleIncidencia.aspx.designer.cs">
+      <DependentUpon>DetalleIncidencia.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FormClientes.aspx.cs">
       <DependentUpon>FormClientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -298,6 +306,7 @@
       <DependentUpon>Usuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utilidades\AlertaHelper.cs" />
+    <Compile Include="Utilidades\Permisos.cs" />
     <Compile Include="Utilidades\SeguridadHelper.cs" />
   </ItemGroup>
   <ItemGroup />

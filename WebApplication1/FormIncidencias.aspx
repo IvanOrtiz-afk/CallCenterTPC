@@ -32,10 +32,16 @@
                             <asp:DropDownList ID="ddlPrioridades" runat="server" CssClass="form-select"></asp:DropDownList>
                         </div>
 
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Estado Inicial</label>
-                            <asp:DropDownList ID="ddlEstados" runat="server" CssClass="form-select"></asp:DropDownList>
-                        </div>
+                    <div class="mb-3">
+                    <label class="form-label">Asunto</label>
+
+                    <asp:TextBox
+                    ID="txtAsunto"
+                    runat="server"
+                    CssClass="form-control"
+                    MaxLength="100"
+                    placeholder="Ej.: No puede imprimir desde Windows 11">
+                    </asp:TextBox>
                     </div>
 
                     <div class="mb-4">

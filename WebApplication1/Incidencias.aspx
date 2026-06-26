@@ -25,11 +25,22 @@
                 AutoGenerateColumns="False" OnRowDataBound="dgvIncidencias_RowDataBound">
                 <HeaderStyle CssClass="table-dark" />
                 <Columns>
-                    <asp:BoundField DataField="id" HeaderText="ID" />
+                    <asp:BoundField DataField="id" HeaderText="Ticket" />
+                    <asp:BoundField DataField="asunto" HeaderText="Asunto" />
                     <asp:BoundField DataField="cliente.nombre" HeaderText="Cliente" /> <asp:BoundField DataField="tipoIncidencia.nombre" HeaderText="Tipo" />
                     <asp:BoundField DataField="prioridad.nombre" HeaderText="Prioridad" />
                     <asp:BoundField DataField="estado.nombre" HeaderText="Estado" />
                     <asp:BoundField DataField="fechaAlta" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
+                    <asp:TemplateField HeaderText="Acciones">
+                        <ItemTemplate>
+                            <asp:HyperLink
+                            runat="server"
+                            Text="Ver"
+                            CssClass="btn btn-sm btn-primary"
+                            NavigateUrl='<%# "DetalleIncidencia.aspx?id=" + Eval("id") %>'>
+                            </asp:HyperLink>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
         </div>

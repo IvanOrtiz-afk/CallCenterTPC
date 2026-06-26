@@ -11,7 +11,6 @@ namespace CallCenterTPC.Datos
 {
     public class UsuarioRepositorio
     {
-
         public void Agregar(Usuario nuevoUsuario)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -123,6 +122,53 @@ namespace CallCenterTPC.Datos
             catch (Exception ex)
             {
                 throw new Exception("Error al intentar listar los usuarios: " + ex.Message);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<Usuario> ListarAgentes()
+        {
+            List<Usuario> lista = new List<Usuario>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+            SELECT id,
+                   nombre,
+                   apellido,
+                   email,
+                   rol_id,
+                   activo
+            FROM usuarios
+            WHERE rol_id = 3
+              AND activo = 1
+            ORDER BY apellido, nombre");
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Usuario aux = new Usuario();
+
+                    aux.id = (int)datos.Lector["id"];
+                    aux.nombre = datos.Lector["nombre"].ToString();
+                    aux.apellido = datos.Lector["apellido"].ToString();
+                    aux.email = datos.Lector["email"].ToString();
+                    aux.rolId = (int)datos.Lector["rol_id"];
+                    aux.activo = (bool)datos.Lector["activo"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al listar agentes: " + ex.Message);
             }
             finally
             {

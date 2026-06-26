@@ -37,18 +37,22 @@ namespace CallCenterTPC
                         break;
                 }
 
-                if (usuario.rolId == 3) // rol agente
-                {
-                    liUsuarios.Visible = false;
-                    liPrioridades.Visible = false;
-                    liTiposIncidencia.Visible = false;
-                }
-                else if (usuario.rolId == 4) // rol coord
-                {
-                    liUsuarios.Visible = false;
-                }
+            liUsuarios.Visible =
+            SeguridadHelper.TienePermiso(Permisos.Usuarios);
 
-                lblUsuario.Text =
+            liClientes.Visible =
+                SeguridadHelper.TienePermiso(Permisos.Clientes);
+
+            liIncidencias.Visible =
+                SeguridadHelper.TienePermiso(Permisos.Incidencias);
+
+            liPrioridades.Visible =
+                SeguridadHelper.TienePermiso(Permisos.Prioridades);
+
+            liTiposIncidencia.Visible =
+                SeguridadHelper.TienePermiso(Permisos.TiposIncidencia);
+
+            lblUsuario.Text =
                     usuario.nombre + " " +
                     usuario.apellido +
                     " (" + rol + ")";

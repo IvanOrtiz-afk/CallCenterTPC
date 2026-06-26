@@ -15,5 +15,12 @@ namespace CallCenterTPC.Dominio
         public int rolId { get; set; }
         public bool activo { get; set; }
         public DateTime fechaCreacion { get; set; }
+        public string NombreCompleto
+        {
+            get
+            {
+                return apellido + ", " + nombre;
+            }
+        }
     }
 }

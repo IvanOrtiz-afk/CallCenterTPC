@@ -34,10 +34,12 @@ namespace CallCenterTPC
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 Incidencia obj = (Incidencia)e.Row.DataItem;
-                e.Row.Cells[1].Text = obj.cliente.nombre; // Columna 1 = Cliente
-                e.Row.Cells[2].Text = obj.tipoIncidencia.nombre; // Columna 2 = Tipo
-                e.Row.Cells[3].Text = obj.prioridad.nombre; // Columna 3 = Prioridad
-                e.Row.Cells[4].Text = obj.estado.nombre; // Columna 4 = Estado
+
+                e.Row.Cells[1].Text = obj.asunto;
+                e.Row.Cells[2].Text = obj.cliente.nombre;
+                e.Row.Cells[3].Text = obj.tipoIncidencia.nombre;
+                e.Row.Cells[4].Text = obj.prioridad.nombre;
+                e.Row.Cells[5].Text = obj.estado.nombre;
             }
         }
     }

@@ -139,6 +139,13 @@
                         <a href="Incidencias.aspx" class="btn btn-secondary">
                             Volver
                         </a>
+                        <asp:Button 
+                            ID="btnReabrir" 
+                            runat="server" 
+                            Text="Reabrir Incidencia" 
+                            CssClass="btn btn-warning shadow-sm" 
+                            Visible="false" 
+                            OnClick="btnReabrir_Click" />
 
                     </div>
 

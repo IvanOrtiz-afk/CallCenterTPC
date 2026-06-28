@@ -37,8 +37,12 @@ namespace CallCenterTPC.Utilidades
                         || permiso == Permisos.Incidencias
                         || permiso == Permisos.ReasignarIncidencias;
 
-                // Agente
+                // Agente (Rol 3)
                 case 3:
+                    return permiso == Permisos.Clientes
+                        || permiso == Permisos.Incidencias;
+                // Telefonista (Rol 2)
+                case 2:
                     return permiso == Permisos.Clientes
                         || permiso == Permisos.Incidencias;
 

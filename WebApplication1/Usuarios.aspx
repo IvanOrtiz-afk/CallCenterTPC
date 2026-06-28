@@ -38,19 +38,23 @@
     <asp:BoundField DataField="rolId" HeaderText="Rol ID" />
 
     <asp:TemplateField HeaderText="Acciones">
-        <ItemTemplate>
+    <ItemTemplate>
+        <asp:HyperLink ID="lnkEditar" runat="server" 
+            Text="Editar" 
+            CssClass="btn btn-warning btn-sm me-2" 
+            NavigateUrl='<%# "FormUsuarios.aspx?id=" + Eval("id") %>'>
+        </asp:HyperLink>
 
-            <asp:LinkButton
-                ID="btnEliminar"
-                runat="server"
-                Text="Eliminar"
-                CssClass="btn btn-danger btn-sm"
-                CommandArgument='<%# Eval("id") %>'
-                OnClick="btnEliminar_Click"
-                OnClientClick="return confirm('¿Está seguro que desea dar de baja este usuario?');" />
-
-        </ItemTemplate>
-    </asp:TemplateField>
+        <asp:LinkButton
+            ID="btnEliminar"
+            runat="server"
+            Text="Eliminar"
+            CssClass="btn btn-danger btn-sm"
+            CommandArgument='<%# Eval("id") %>'
+            OnClick="btnEliminar_Click"
+            OnClientClick="return confirm('¿Está seguro que desea dar de baja este usuario?');" />
+    </ItemTemplate>
+</asp:TemplateField>
 
 </Columns>
             </asp:GridView>

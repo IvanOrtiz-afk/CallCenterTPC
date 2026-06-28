@@ -4,8 +4,10 @@
     <div class="row justify-content-center mt-4">
         <div class="col-md-8">
             <div class="card shadow-sm">
-                <div class="card-header bg-dark text-white">
-                    <h4 class="mb-0">Registrar Nueva Incidencia</h4>
+               <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">
+                        <asp:Label ID="lblTitulo" runat="server" Text="Registrar Nueva Incidencia"></asp:Label>
+                    </h4>
                 </div>
                 <div class="card-body">
 

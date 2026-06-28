@@ -2,9 +2,6 @@
 using CallCenterTPC.Dominio;
 using CallCenterTPC.Utilidades;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -24,22 +21,59 @@ namespace CallCenterTPC
 
             if (!IsPostBack)
             {
-                dgvIncidencias.DataSource = new IncidenciaRepositorio().Listar();
+                CargarGrilla();
+            }
+        }
+
+        private void CargarGrilla()
+        {
+            try
+            {
+                // Recuperamos el objeto usuario de la sesión
+                Usuario usuario = SeguridadHelper.UsuarioActual();
+
+                IncidenciaRepositorio repo = new IncidenciaRepositorio();
+
+                // Llama al método modificado pasándole el Rol y el ID del usuario
+                // IMPORTANTE: Adaptá "usuario.rolId" según cómo tengas nombrada esa propiedad en tu clase Usuario
+                dgvIncidencias.DataSource = repo.Listar(usuario.rolId, usuario.id);
                 dgvIncidencias.DataBind();
+            }
+            catch (Exception ex)
+            {
+                AlertaHelper.MostrarAlerta(pnlMensaje, lblMensaje, "Error al cargar las incidencias: " + ex.Message, true);
             }
         }
 
         protected void dgvIncidencias_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                Incidencia obj = (Incidencia)e.Row.DataItem;
+               
+                string estadoActual = DataBinder.Eval(e.Row.DataItem, "estado.nombre").ToString();
 
-                e.Row.Cells[1].Text = obj.asunto;
-                e.Row.Cells[2].Text = obj.cliente.nombre;
-                e.Row.Cells[3].Text = obj.tipoIncidencia.nombre;
-                e.Row.Cells[4].Text = obj.prioridad.nombre;
-                e.Row.Cells[5].Text = obj.estado.nombre;
+                
+                HyperLink lnkEditar = (HyperLink)e.Row.FindControl("lnkEditar");
+                HyperLink lnkResolver = (HyperLink)e.Row.FindControl("lnkResolver");
+                HyperLink lnkCerrar = (HyperLink)e.Row.FindControl("lnkCerrar");
+
+               
+                switch (estadoActual)
+                {
+                    case "Cerrado":
+                    case "Resuelto":
+                        lnkEditar.Visible = false;
+                        lnkResolver.Visible = false;
+                        lnkCerrar.Visible = false;
+                        break;
+
+                    case "Abierto":
+                    case "Asignado":
+                    case "Reabierto":
+                    case "En Análisis": 
+                        break;
+                }
             }
         }
     }

@@ -99,6 +99,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CerrarIncidencia.aspx" />
     <Content Include="Clientes.aspx" />
     <Content Include="DetalleIncidencia.aspx" />
     <Content Include="FormClientes.aspx" />
@@ -128,6 +129,7 @@
     <Content Include="Incidencias.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Prioridades.aspx" />
+    <Content Include="ResolverIncidencia.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -196,6 +198,13 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="CerrarIncidencia.aspx.cs">
+      <DependentUpon>CerrarIncidencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CerrarIncidencia.aspx.designer.cs">
+      <DependentUpon>CerrarIncidencia.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Clientes.aspx.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -270,6 +279,13 @@
       <DependentUpon>Prioridades.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResolverIncidencia.aspx.cs">
+      <DependentUpon>ResolverIncidencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResolverIncidencia.aspx.designer.cs">
+      <DependentUpon>ResolverIncidencia.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -306,6 +322,7 @@
       <DependentUpon>Usuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utilidades\AlertaHelper.cs" />
+    <Compile Include="Utilidades\EmailService.cs" />
     <Compile Include="Utilidades\Permisos.cs" />
     <Compile Include="Utilidades\SeguridadHelper.cs" />
   </ItemGroup>

@@ -38,7 +38,7 @@ namespace CallCenterTPC
                         txtPassword.Text = usuario.password; //recordar hashear esto
 
                         ddlRoles.SelectedValue = usuario.rolId.ToString();
-
+                        lblTitulo.Text = "Modificar Usuario";
                         btnGuardar.Text = "Modificar Usuario";
                     }
                 }

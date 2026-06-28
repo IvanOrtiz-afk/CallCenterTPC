@@ -7,6 +7,8 @@ namespace CallCenterTPC
 {
     public partial class DetalleIncidencia : System.Web.UI.Page
     {
+
+        private IncidenciaRepositorio repo = new IncidenciaRepositorio();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!SeguridadHelper.HaySesion())
@@ -24,8 +26,6 @@ namespace CallCenterTPC
             if (!IsPostBack)
             {
                 int id = int.Parse(Request.QueryString["id"]);
-
-                IncidenciaRepositorio repo = new IncidenciaRepositorio();
 
                 Incidencia incidencia = repo.ObtenerPorId(id);
 
@@ -64,6 +64,15 @@ namespace CallCenterTPC
                     ddlAgentes.DataValueField = "id";
                     ddlAgentes.DataBind();
                 }
+
+                if (incidencia.estadoId == 3 || incidencia.estadoId == 6)
+                {
+                    btnReabrir.Visible = true;
+                }
+                else
+                {
+                    btnReabrir.Visible = false;
+                }
             }
         }
 
@@ -73,8 +82,6 @@ namespace CallCenterTPC
             {
                 int idIncidencia = int.Parse(Request.QueryString["id"]);
                 int idAgente = int.Parse(ddlAgentes.SelectedValue);
-
-                IncidenciaRepositorio repo = new IncidenciaRepositorio();
 
                 repo.ActualizarAsignacion(idIncidencia, idAgente);
 
@@ -89,6 +96,26 @@ namespace CallCenterTPC
                     lblMensaje,
                     ex.Message,
                     true);
+            }
+        }
+
+        protected void btnReabrir_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idIncidencia = int.Parse(Request.QueryString["id"]);
+
+                // Ejecutamos el cambio de estado en la DB
+                repo.ReabrirIncidencia(idIncidencia);
+
+                AlertaHelper.GuardarMensajeExito("La incidencia ha sido reabierta con éxito.");
+
+                // Redireccionamos a la misma página para refrescar los datos y volver a evaluar los botones
+                Response.Redirect("DetalleIncidencia.aspx?id=" + idIncidencia, false);
+            }
+            catch (Exception ex)
+            {
+                AlertaHelper.MostrarAlerta(pnlMensaje, lblMensaje, ex.Message, true);
             }
         }
     }

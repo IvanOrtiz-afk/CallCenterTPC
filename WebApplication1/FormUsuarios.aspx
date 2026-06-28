@@ -4,8 +4,11 @@
     <div class="row justify-content-center mt-4">
         <div class="col-md-6">
             <div class="card shadow-sm">
-                <div class="card-header bg-dark text-white">
-                    <h4><span class="material-symbols-outlined align-text-bottom me-2">manage_accounts</span>Registrar Usuario</h4>
+               <div class="card-header bg-dark text-white">
+                    <h4>
+                        <span class="material-symbols-outlined align-text-bottom me-2">manage_accounts</span>
+                        <asp:Label ID="lblTitulo" runat="server" Text="Registrar Usuario"></asp:Label>
+                    </h4>
                 </div>
                 <div class="card-body">
                     

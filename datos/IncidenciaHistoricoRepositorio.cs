@@ -11,7 +11,7 @@ namespace CallCenterTPC.Datos
     public class IncidenciaHistoricoRepositorio
     {
 
-        // --- LECTURA (GetAll) ---
+      
         public List<IncidenciaHistorico> Listar()
         {
             List<IncidenciaHistorico> lista = new List<IncidenciaHistorico>();
@@ -19,7 +19,7 @@ namespace CallCenterTPC.Datos
 
             try
             {
-                // Traemos todos los campos mapeados en la tabla incidencias_historico
+              
                 datos.setearConsulta("SELECT id, id_incidencia, estado_incidencia_id, tipo_incidencia_id, " +
                                      "cliente_id, usuario_id, prioridad_incidencia_id, fecha " +
                                      "FROM [incidencias_historico]");

@@ -10,7 +10,7 @@ namespace CallCenterTPC.Dominio
     {
         public int id { get; set; }
         public int clienteId { get; set; }
-        // AGREGA ESTAS PROPIEDADES DE OBJETO:
+     
         public Cliente cliente { get; set; }
         public TipoIncidencia tipoIncidencia { get; set; }
         public Prioridad prioridad { get; set; }

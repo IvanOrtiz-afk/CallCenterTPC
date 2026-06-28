@@ -50,7 +50,7 @@ namespace CallCenterTPC.Datos
 
             try
             {
-                // El ID es IDENTITY, por lo que solo insertamos el nombre
+             
                 datos.setearConsulta("INSERT INTO [tipos_incidencias] (nombre) VALUES (@nombre)");
                 datos.setearParametro("@nombre", nuevoTipo.nombre);
 
@@ -66,7 +66,7 @@ namespace CallCenterTPC.Datos
             }
         }
 
-        // --- MODIFICACIÓN ---
+       
         public void Modificar(TipoIncidencia tipo)
         {
             AccesoDatos datos = new AccesoDatos();

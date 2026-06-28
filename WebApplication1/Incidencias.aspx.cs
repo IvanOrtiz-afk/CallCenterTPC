@@ -16,7 +16,7 @@ namespace CallCenterTPC
                 Response.Redirect("Login.aspx");
                 return;
             }
-            // Mostrar mensaje de éxito si venimos de registrar uno
+        
             AlertaHelper.CargarMensajeRedirigido(pnlMensaje, lblMensaje);
 
             if (!IsPostBack)
@@ -29,13 +29,12 @@ namespace CallCenterTPC
         {
             try
             {
-                // Recuperamos el objeto usuario de la sesión
+               
                 Usuario usuario = SeguridadHelper.UsuarioActual();
 
                 IncidenciaRepositorio repo = new IncidenciaRepositorio();
 
-                // Llama al método modificado pasándole el Rol y el ID del usuario
-                // IMPORTANTE: Adaptá "usuario.rolId" según cómo tengas nombrada esa propiedad en tu clase Usuario
+            
                 dgvIncidencias.DataSource = repo.Listar(usuario.rolId, usuario.id);
                 dgvIncidencias.DataBind();
             }

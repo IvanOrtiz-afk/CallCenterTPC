@@ -14,7 +14,7 @@ namespace CallCenterTPC.Datos
 
             try
             {
-                // 1. Armamos la consulta base (sin filtros)
+               
                 string consulta = @"SELECT i.id, i.cliente_id, c.nombre AS nombreCliente, c.apellido AS apellidoCliente, 
                               i.tipo_incidencia_id, t.nombre AS nombreTipo, 
                               i.prioridad_id, p.nombre AS nombrePrioridad, 

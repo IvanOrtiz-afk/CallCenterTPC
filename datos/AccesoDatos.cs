@@ -33,6 +33,12 @@ namespace CallCenterTPC.Datos
             comando.Parameters.AddWithValue(nombre, valor);
         }
 
+        public void setearProcedimiento(string nombreSp)
+        {
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.CommandText = nombreSp;
+        }
+
         public void ejecutarLectura()
         {
             comando.Connection = conexion;

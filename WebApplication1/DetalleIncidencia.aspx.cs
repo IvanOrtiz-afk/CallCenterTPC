@@ -105,12 +105,12 @@ namespace CallCenterTPC
             {
                 int idIncidencia = int.Parse(Request.QueryString["id"]);
 
-                // Ejecutamos el cambio de estado en la DB
+             
                 repo.ReabrirIncidencia(idIncidencia);
 
                 AlertaHelper.GuardarMensajeExito("La incidencia ha sido reabierta con éxito.");
 
-                // Redireccionamos a la misma página para refrescar los datos y volver a evaluar los botones
+                
                 Response.Redirect("DetalleIncidencia.aspx?id=" + idIncidencia, false);
             }
             catch (Exception ex)

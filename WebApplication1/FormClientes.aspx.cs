@@ -35,10 +35,10 @@ namespace CallCenterTPC
                         txtTelefono.Text = clienteSeleccionado.telefono.ToString();
                         txtEmail.Text = clienteSeleccionado.email;
 
-                        // LÓGICA DEL BOTÓN INTELIGENTE
+                   
                         if (clienteSeleccionado.activo)
                         {
-                            // Cliente activo: Permite todo
+                          
                             btnEliminar.Text = "Dar de baja";
                             btnEliminar.CssClass = "btn btn-danger";
 
@@ -53,7 +53,7 @@ namespace CallCenterTPC
                         }
                         else
                         {
-                            // Cliente inactivo: Bloquea la edición
+                         
                             btnEliminar.Text = "Reactivar cliente";
                             btnEliminar.CssClass = "btn btn-success";
 

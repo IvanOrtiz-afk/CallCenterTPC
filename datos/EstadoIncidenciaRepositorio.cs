@@ -18,7 +18,7 @@ namespace CallCenterTPC.Datos
 
             try
             {
-                // Obtenemos todos los estados disponibles
+                
                 datos.setearConsulta("SELECT id, nombre FROM [estados]");
                 datos.ejecutarLectura();
 

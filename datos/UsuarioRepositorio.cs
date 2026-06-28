@@ -38,7 +38,7 @@ namespace CallCenterTPC.Datos
             }
         }
 
-        // --- MODIFICACIÓN ---
+     
         public void Modificar(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -69,7 +69,7 @@ namespace CallCenterTPC.Datos
             }
         }
 
-        // --- BAJA (Lógica) ---
+      
         public void Eliminar(int idUsuario)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -91,7 +91,7 @@ namespace CallCenterTPC.Datos
             }
         }
 
-        // --- LECTURA (Ejemplo para listar usuarios) ---
+      
         public List<Usuario> Listar()
         {
             List<Usuario> lista = new List<Usuario>();

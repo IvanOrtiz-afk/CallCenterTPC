@@ -293,4 +293,11 @@ DROP TABLE IF EXISTS [prioridades];
 DROP TABLE IF EXISTS [tipos_incidencias];
 
 
-
+-- Listar clientes --
+CREATE PROCEDURE spListarClientesActivos
+AS
+BEGIN
+    SELECT id, nombre, apellido, documento, email, telefono, activo, fecha_creacion 
+    FROM clientes 
+    WHERE activo = 1;
+END

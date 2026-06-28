@@ -231,5 +231,24 @@ namespace CallCenterTPC.Datos
             }
         }
 
+        public string ObtenerEmailPorId(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT email FROM clientes WHERE id = @id");
+                datos.setearParametro("@id", id);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return datos.Lector["email"].ToString();
+                }
+                return string.Empty;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.cerrarConexion(); }
+        }
+
     }
 }

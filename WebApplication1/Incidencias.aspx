@@ -33,11 +33,24 @@
                     <asp:BoundField DataField="fechaAlta" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
                     <asp:TemplateField HeaderText="Acciones">
                         <ItemTemplate>
-                            <asp:HyperLink
-                            runat="server"
-                            Text="Ver"
-                            CssClass="btn btn-sm btn-primary"
-                            NavigateUrl='<%# "DetalleIncidencia.aspx?id=" + Eval("id") %>'>
+                            <asp:HyperLink ID="lnkVer" runat="server" CssClass="btn btn-sm btn-info text-white"
+                                NavigateUrl='<%# "DetalleIncidencia.aspx?id=" + Eval("id") %>' ToolTip="Ver Detalle">
+                                <span class="material-symbols-outlined align-middle" style="font-size: 18px;">visibility</span>
+                            </asp:HyperLink>
+        
+                            <asp:HyperLink ID="lnkEditar" runat="server" CssClass="btn btn-sm btn-warning"
+                                NavigateUrl='<%# "FormIncidencias.aspx?id=" + Eval("id") %>' ToolTip="Editar">
+                                <span class="material-symbols-outlined align-middle" style="font-size: 18px;">edit</span>
+                            </asp:HyperLink>
+
+                            <asp:HyperLink ID="lnkResolver" runat="server" CssClass="btn btn-sm btn-success"
+                                NavigateUrl='<%# "ResolverIncidencia.aspx?id=" + Eval("id") %>' ToolTip="Resolver">
+                                <span class="material-symbols-outlined align-middle" style="font-size: 18px;">task_alt</span>
+                            </asp:HyperLink>
+
+                            <asp:HyperLink ID="lnkCerrar" runat="server" CssClass="btn btn-sm btn-danger"
+                                NavigateUrl='<%# "CerrarIncidencia.aspx?id=" + Eval("id") %>' ToolTip="Cerrar Incidencia">
+                                <span class="material-symbols-outlined align-middle" style="font-size: 18px;">block</span>
                             </asp:HyperLink>
                         </ItemTemplate>
                     </asp:TemplateField>

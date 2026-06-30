@@ -19,12 +19,12 @@ namespace CallCenterTPC
             {
                 CargarDesplegables();
 
-                // Si viene un ID en la URL, estamos editando
+           
                 if (Request.QueryString["id"] != null)
                 {
                     int id = int.Parse(Request.QueryString["id"]);
                     lblTitulo.Text = "Editar Incidencia #" + id;
-                    btnGuardar.Text = "Actualizar Incidencia"; // Cambiamos el texto del botón
+                    btnGuardar.Text = "Actualizar Incidencia"; 
                     CargarIncidenciaParaEdicion(id);
                 }
                 else
@@ -43,19 +43,19 @@ namespace CallCenterTPC
                 PrioridadRepositorio prioridadRepo = new PrioridadRepositorio();
                 ClienteRepositorio clienteRepo = new ClienteRepositorio();
 
-                // tipos de incidencia
+           
                 ddlTipos.DataSource = tipoRepo.Listar();
                 ddlTipos.DataTextField = "nombre";
                 ddlTipos.DataValueField = "id";
                 ddlTipos.DataBind();
 
-                //prioridades
+            
                 ddlPrioridades.DataSource = prioridadRepo.Listar();
                 ddlPrioridades.DataTextField = "nombre";
                 ddlPrioridades.DataValueField = "id";
                 ddlPrioridades.DataBind();
 
-                // clientes
+             
                 ddlClientes.DataSource = clienteRepo.ObtenerTodos();
                 ddlClientes.DataTextField = "infoDesplegable";
                 ddlClientes.DataValueField = "id";
@@ -77,7 +77,7 @@ namespace CallCenterTPC
             {
                 IncidenciaRepositorio repo = new IncidenciaRepositorio();
 
-                // Asumo que tienes un método similar a este en tu repositorio
+               
                 Incidencia inc = repo.ObtenerPorId(id);
 
                 if (inc != null)
@@ -100,7 +100,7 @@ namespace CallCenterTPC
         {
             try
             {
-                // Validaciones
+               
                 if (string.IsNullOrWhiteSpace(txtAsunto.Text))
                 {
                     AlertaHelper.MostrarAlerta(pnlMensaje, lblMensaje, "Debe ingresar un asunto.", true);
@@ -118,7 +118,7 @@ namespace CallCenterTPC
                 Incidencia incidenciaActual = new Incidencia();
                 ClienteRepositorio clienteRepo = new ClienteRepositorio();
 
-                // Cargamos los datos en común que se guardan tanto en ALTA como en EDICIÓN
+              
                 incidenciaActual.clienteId = int.Parse(ddlClientes.SelectedValue);
                 incidenciaActual.tipoIncidenciaId = int.Parse(ddlTipos.SelectedValue);
                 incidenciaActual.prioridadId = int.Parse(ddlPrioridades.SelectedValue);
@@ -158,7 +158,7 @@ namespace CallCenterTPC
 
                     AlertaHelper.GuardarMensajeExito("La incidencia fue creada correctamente.");
                     
-                    // TODO: Aquí debes invocar tu función para enviar el mail de alta al cliente.
+                  
                 }
 
                 Response.Redirect("Incidencias.aspx", false);

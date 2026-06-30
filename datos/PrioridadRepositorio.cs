@@ -65,7 +65,7 @@ namespace CallCenterTPC.Datos
             }
         }
 
-        // --- MODIFICACIÓN ---
+      
         public void Modificar(Prioridad prioridad)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -90,15 +90,15 @@ namespace CallCenterTPC.Datos
             }
         }
 
-        // --- BAJA (Física con validación de relaciones) ---
+     
         public void Eliminar(int idPrioridad)
         {
-            // Instancia para verificar si existen relaciones
+          
             AccesoDatos datosValidacion = new AccesoDatos();
 
             try
             {
-                // 1. Verificamos si existe alguna incidencia con esta prioridad
+                
                 datosValidacion.setearConsulta("SELECT COUNT(*) AS Cantidad FROM [incidencias] WHERE prioridad_id = @id");
                 datosValidacion.setearParametro("@id", idPrioridad);
                 datosValidacion.ejecutarLectura();
@@ -107,7 +107,7 @@ namespace CallCenterTPC.Datos
                 {
                     int cantidadAsociadas = (int)datosValidacion.Lector["Cantidad"];
 
-                    // Si la cantidad es mayor a 0, la regla de negocio nos impide borrarla
+                  
                     if (cantidadAsociadas > 0)
                     {
                         throw new Exception($"No se puede eliminar la prioridad porque está asociada a {cantidadAsociadas} incidencia(s).");
@@ -116,17 +116,16 @@ namespace CallCenterTPC.Datos
             }
             catch (Exception ex)
             {
-                // Relanzamos la excepción (ya sea la de nuestra regla o un error de SQL) 
-                // para que la UI se entere y no continúe con la eliminación.
+               
                 throw ex;
             }
             finally
             {
-                // Cerramos la primera conexión
+              
                 datosValidacion.cerrarConexion();
             }
 
-            // 2. Si superó la validación (no entró al throw), procedemos con el borrado físico
+         
             AccesoDatos datosBorrado = new AccesoDatos();
 
             try

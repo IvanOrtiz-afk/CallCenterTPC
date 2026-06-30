@@ -18,7 +18,7 @@ namespace CallCenterTPC.Datos
 
             try
             {
-                // Solo necesitamos el ID y el nombre del rol
+             
                 datos.setearConsulta("SELECT id, nombre FROM [roles]");
                 datos.ejecutarLectura();
 

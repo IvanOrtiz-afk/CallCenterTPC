@@ -51,7 +51,7 @@ namespace CallCenterTPC
         {
             try
             {
-                // validaciones
+              
 
                 if (string.IsNullOrWhiteSpace(txtNombre.Text))
                 {
@@ -118,7 +118,7 @@ namespace CallCenterTPC
                 nuevo.password = txtPassword.Text;
                 nuevo.rolId = int.Parse(ddlRoles.SelectedValue);
 
-                // alta o modificacion
+              
 
                 if (Request.QueryString["id"] != null)
                 {

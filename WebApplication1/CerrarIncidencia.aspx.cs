@@ -33,14 +33,14 @@ namespace CallCenterTPC
         {
             try
             {
-                // Validación 1: Cumplir con la consigna del TP (comentario obligatorio)
+              
                 if (string.IsNullOrWhiteSpace(txtComentario.Text))
                 {
                     AlertaHelper.MostrarAlerta(pnlMensaje, lblMensaje, "El comentario de resolución es obligatorio.", true);
                     return;
                 }
 
-                // Validación 2: Recuperar el ID de la URL
+              
                 if (Request.QueryString["id"] != null)
                 {
                     int idIncidencia = int.Parse(Request.QueryString["id"]);
@@ -48,12 +48,12 @@ namespace CallCenterTPC
 
                     IncidenciaRepositorio repo = new IncidenciaRepositorio();
 
-                    // Llamamos al método que ya habíamos creado en el Repositorio
+                   
                     repo.CerrarIncidencia(idIncidencia, comentario);
 
                     AlertaHelper.GuardarMensajeExito("La incidencia fue cerrada correctamente.");
 
-                    // TODO: (Punto 4) Aquí enviarás el mail al cliente avisando de la resolución
+                    // TODO: mail al cliente avisando de la resolución
 
                     Response.Redirect("Incidencias.aspx", false);
                 }

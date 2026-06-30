@@ -14,7 +14,7 @@ namespace CallCenterTPC.Datos
 
             try
             {
-                // Traemos todos los campos mapeados en la tabla clientes
+              
                 datos.setearConsulta("SELECT id, nombre, apellido, documento, email, telefono, activo, fecha_creacion FROM [clientes]");
                 datos.ejecutarLectura();
 
@@ -146,7 +146,11 @@ namespace CallCenterTPC.Datos
 
             try
             {
-                datos.setearConsulta("SELECT id, nombre, apellido, documento, email, telefono, activo, fecha_creacion FROM clientes WHERE activo = 1");
+                //datos.setearConsulta("SELECT id, nombre, apellido, documento, email, telefono, activo, fecha_creacion FROM clientes WHERE activo = 1");
+                //datos.ejecutarLectura();
+
+
+                datos.setearProcedimiento("spListarClientesActivos");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -161,7 +165,7 @@ namespace CallCenterTPC.Datos
                     if (!(datos.Lector["email"] is DBNull))
                         aux.email = (string)datos.Lector["email"];
 
-                    // ACÁ ESTÁ EL ARREGLO: Convertimos el varchar de SQL al int de C#
+                 
                     if (!(datos.Lector["telefono"] is DBNull))
                         aux.telefono = Convert.ToInt32(datos.Lector["telefono"]);
 

@@ -26,10 +26,10 @@ namespace CallCenterTPC
             {
                 try
                 {
-                    // Ocultamos el panel de error al intentar guardar
+                   
                     pnlError.Visible = false;
 
-                // Validación simple: que no envíen el campo vacío
+              
                 if (string.IsNullOrWhiteSpace(txtNombre.Text))
                 {
                     AlertaHelper.MostrarAlerta(pnlMensaje,lblMensaje,"Debe ingresar un nombre.",true);
@@ -37,14 +37,14 @@ namespace CallCenterTPC
                     return;
                 }
 
-                // Instanciamos el modelo y el repositorio
+               
                 TipoIncidencia nuevoTipo = new TipoIncidencia();
                     TipoIncidenciaRepositorio repo = new TipoIncidenciaRepositorio();
 
-                    // Asignamos el valor
+                   
                     nuevoTipo.nombre = txtNombre.Text;
 
-                    // Guardamos en la base de datos
+                 
                     repo.Agregar(nuevoTipo);
 
                     AlertaHelper.GuardarMensajeExito("¡El tipo de incidencia se creó correctamente!");

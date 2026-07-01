@@ -52,9 +52,16 @@ namespace CallCenterTPC
 
         private void CargarGrilla()
         {
-            // Asumo que tu UsuarioRepositorio tiene un método Listar()
+           
             dgvUsuarios.DataSource = new UsuarioRepositorio().Listar();
             dgvUsuarios.DataBind();
+        }
+
+        protected void dgvUsuarios_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+           
+            dgvUsuarios.PageIndex = e.NewPageIndex;
+            CargarGrilla();
         }
     }
 }

@@ -254,5 +254,103 @@ namespace CallCenterTPC.Datos
             finally { datos.cerrarConexion(); }
         }
 
+        public List<Cliente> FiltrarActivos(string filtro = "")
+        {
+            List<Cliente> lista = new List<Cliente>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                
+                datos.setearProcedimiento("spFiltrarClientesParaIncidencias");
+
+            
+                datos.setearParametro("@filtro", filtro);
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Cliente aux = new Cliente();
+                    aux.id = (int)datos.Lector["id"];
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.apellido = (string)datos.Lector["apellido"];
+                    aux.documento = (int)datos.Lector["documento"];
+                    aux.email = (string)datos.Lector["email"];
+                    aux.telefono = (int)datos.Lector["telefono"];
+                    aux.activo = (bool)datos.Lector["activo"];
+
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<Cliente> Buscar(string filtro, bool incluirInactivos)
+        {
+            List<Cliente> lista = new List<Cliente>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                string consulta = @"SELECT id, nombre, apellido, documento, email, telefono, activo, fecha_creacion 
+                       FROM [clientes]
+                       WHERE (
+                           (nombre + ' ' + apellido) LIKE @filtro OR
+                           (apellido + ' ' + nombre) LIKE @filtro OR
+                           CAST(documento AS VARCHAR) LIKE @filtro OR
+                           email LIKE @filtro
+                       )";
+
+                if (!incluirInactivos)
+                    consulta += " AND activo = 1";
+
+                datos.setearConsulta(consulta);
+                datos.setearParametro("@filtro", "%" + filtro + "%");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Cliente aux = new Cliente();
+
+                    aux.id = (int)datos.Lector["id"];
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.apellido = (string)datos.Lector["apellido"];
+                    aux.documento = (int)datos.Lector["documento"];
+
+                    if (!(datos.Lector["email"] is DBNull))
+                        aux.email = (string)datos.Lector["email"];
+
+                    if (!(datos.Lector["telefono"] is DBNull))
+                        aux.telefono = Convert.ToInt32(datos.Lector["telefono"]);
+
+                    aux.activo = (bool)datos.Lector["activo"];
+
+                    if (!(datos.Lector["fecha_creacion"] is DBNull))
+                        aux.fechaCreacion = (DateTime)datos.Lector["fecha_creacion"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al intentar buscar clientes: " + ex.Message);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }

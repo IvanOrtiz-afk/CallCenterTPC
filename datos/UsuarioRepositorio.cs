@@ -279,5 +279,111 @@ namespace CallCenterTPC.Datos
                 datos.cerrarConexion();
             }
         }
+
+        public List<Usuario> Buscar(string filtro)
+        {
+            List<Usuario> lista = new List<Usuario>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+            SELECT id, nombre, apellido, email, password, rol_id, activo, fecha_creacion 
+            FROM [usuarios]
+            WHERE (
+                CAST(id AS VARCHAR) LIKE @filtro OR
+                (nombre + ' ' + apellido) LIKE @filtro OR
+                (apellido + ' ' + nombre) LIKE @filtro OR
+                email LIKE @filtro
+            )");
+
+                datos.setearParametro("@filtro", "%" + filtro + "%");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Usuario aux = new Usuario();
+                    aux.id = (int)datos.Lector["id"];
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.apellido = (string)datos.Lector["apellido"];
+                    aux.email = (string)datos.Lector["email"];
+                    aux.password = (string)datos.Lector["password"];
+                    aux.rolId = (int)datos.Lector["rol_id"];
+                    aux.activo = (bool)datos.Lector["activo"];
+                    aux.fechaCreacion = (DateTime)datos.Lector["fecha_creacion"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al intentar buscar usuarios: " + ex.Message);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<Usuario> ListarActivos()
+        {
+            List<Usuario> lista = new List<Usuario>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT id, nombre, apellido, email, password, rol_id, activo, fecha_creacion FROM [usuarios] WHERE activo = 1");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Usuario aux = new Usuario();
+                    aux.id = (int)datos.Lector["id"];
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.apellido = (string)datos.Lector["apellido"];
+                    aux.email = (string)datos.Lector["email"];
+                    aux.password = (string)datos.Lector["password"];
+                    aux.rolId = (int)datos.Lector["rol_id"];
+                    aux.activo = (bool)datos.Lector["activo"];
+                    aux.fechaCreacion = (DateTime)datos.Lector["fecha_creacion"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al intentar listar los usuarios activos: " + ex.Message);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void CambiarEstado(int id, bool nuevoEstado)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE [usuarios] SET activo = @activo WHERE id = @id");
+                datos.setearParametro("@id", id);
+                datos.setearParametro("@activo", nuevoEstado);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al intentar cambiar el estado del usuario: " + ex.Message);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

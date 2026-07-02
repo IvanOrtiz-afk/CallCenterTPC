@@ -341,7 +341,7 @@ namespace CallCenterTPC.Datos
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // Pasamos al estado 4 (Reabierto)
+                
                 datos.setearConsulta("UPDATE incidencias SET estado_id = 4 WHERE id = @id");
                 datos.setearParametro("@id", idIncidencia);
 
@@ -363,7 +363,7 @@ namespace CallCenterTPC.Datos
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // Hacemos un JOIN directo para obtener el email del cliente asociado a esta incidencia
+                
                 datos.setearConsulta(@"SELECT c.email 
                                FROM clientes c 
                                INNER JOIN incidencias i ON c.id = i.cliente_id 
@@ -380,6 +380,76 @@ namespace CallCenterTPC.Datos
             }
             catch (Exception ex) { throw ex; }
             finally { datos.cerrarConexion(); }
+        }
+
+        public List<Incidencia> Buscar(int idRol, int idUsuario, string filtro)
+        {
+            List<Incidencia> lista = new List<Incidencia>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                string consulta = @"SELECT i.id, i.cliente_id, c.nombre AS nombreCliente, c.apellido AS apellidoCliente, 
+                      i.tipo_incidencia_id, t.nombre AS nombreTipo, 
+                      i.prioridad_id, p.nombre AS nombrePrioridad, 
+                      i.estado_id, e.nombre AS nombreEstado, i.asunto,
+                      i.descripcion, i.fecha_alta
+               FROM [incidencias] i
+               INNER JOIN [clientes] c ON i.cliente_id = c.id
+               INNER JOIN [tipos_incidencias] t ON i.tipo_incidencia_id = t.id
+               INNER JOIN [prioridades] p ON i.prioridad_id = p.id
+               INNER JOIN [estados] e ON i.estado_id = e.id
+               WHERE (
+                   CAST(i.id AS VARCHAR) LIKE @filtro OR
+                   (c.nombre + ' ' + c.apellido) LIKE @filtro OR
+                   (c.apellido + ' ' + c.nombre) LIKE @filtro
+               )";
+
+                
+                if (idRol == 2)
+                {
+                    consulta += " AND i.usuario_asignado_id = @idUsuario";
+                    datos.setearParametro("@idUsuario", idUsuario);
+                }
+
+                datos.setearConsulta(consulta);
+                datos.setearParametro("@filtro", "%" + filtro + "%");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Incidencia aux = new Incidencia();
+
+                    aux.id = (int)datos.Lector["id"];
+                    aux.asunto = datos.Lector["asunto"].ToString();
+                    aux.descripcion = (string)datos.Lector["descripcion"];
+                    aux.fechaAlta = (DateTime)datos.Lector["fecha_alta"];
+
+                    aux.cliente = new Cliente();
+                    aux.cliente.nombre = (string)datos.Lector["nombreCliente"] + " " + (string)datos.Lector["apellidoCliente"];
+
+                    aux.tipoIncidencia = new TipoIncidencia();
+                    aux.tipoIncidencia.nombre = (string)datos.Lector["nombreTipo"];
+
+                    aux.prioridad = new Prioridad();
+                    aux.prioridad.nombre = (string)datos.Lector["nombrePrioridad"];
+
+                    aux.estado = new EstadoIncidencia();
+                    aux.estado.nombre = (string)datos.Lector["nombreEstado"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al intentar buscar incidencias: " + ex.Message);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }

@@ -83,5 +83,34 @@ namespace CallCenterTPC
                 }
             }
         }
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Usuario usuario = SeguridadHelper.UsuarioActual();
+                IncidenciaRepositorio repo = new IncidenciaRepositorio();
+
+                string filtro = txtBuscar.Text.Trim();
+
+                if (string.IsNullOrEmpty(filtro))
+                {
+                    CargarGrilla();
+                    return;
+                }
+
+                dgvIncidencias.DataSource = repo.Buscar(usuario.rolId, usuario.id, filtro);
+                dgvIncidencias.DataBind();
+            }
+            catch (Exception ex)
+            {
+                AlertaHelper.MostrarAlerta(pnlMensaje, lblMensaje, "Error al buscar incidencias: " + ex.Message, true);
+            }
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "";
+            CargarGrilla();
+        }
     }
 }

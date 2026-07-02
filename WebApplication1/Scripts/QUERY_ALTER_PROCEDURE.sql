@@ -1,3 +1,6 @@
+use CallCenterDB;
+
+
 ALTER PROCEDURE spFiltrarClientesParaIncidencias
     @filtro VARCHAR(100) = '' 
 AS

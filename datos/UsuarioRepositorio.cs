@@ -137,16 +137,16 @@ namespace CallCenterTPC.Datos
             try
             {
                 datos.setearConsulta(@"
-            SELECT id,
-                   nombre,
-                   apellido,
-                   email,
-                   rol_id,
-                   activo
-            FROM usuarios
-            WHERE rol_id = 3
-              AND activo = 1
-            ORDER BY apellido, nombre");
+    SELECT id,
+           nombre,
+           apellido,
+           email,
+           rol_id,
+           activo
+    FROM usuarios
+    WHERE activo = 1
+      AND rol_id IN (2,3)
+    ORDER BY apellido, nombre");
 
                 datos.ejecutarLectura();
 

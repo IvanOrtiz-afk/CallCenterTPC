@@ -31,20 +31,16 @@ namespace CallCenterTPC.Utilidades
                 case 1:
                     return true;
 
-                // Coordinador
-                case 4:
-                    return permiso == Permisos.Clientes
-                        || permiso == Permisos.Incidencias
-                        || permiso == Permisos.ReasignarIncidencias;
-
-                // Agente (Rol 3)
-                case 3:
-                    return permiso == Permisos.Clientes
-                        || permiso == Permisos.Incidencias;
                 // Telefonista (Rol 2)
                 case 2:
                     return permiso == Permisos.Clientes
                         || permiso == Permisos.Incidencias;
+
+                // Supervisor (Rol 3)
+                case 3:
+                    return permiso == Permisos.Clientes
+                        || permiso == Permisos.Incidencias
+                        || permiso == Permisos.ReasignarIncidencias;
 
                 default:
                     return false;
@@ -64,7 +60,7 @@ namespace CallCenterTPC.Utilidades
             Usuario usuario = UsuarioActual();
 
             return usuario != null &&
-                   usuario.rolId == 3;
+                   usuario.rolId == 2;
         }
 
         public static bool EsCoordinador()
@@ -72,14 +68,14 @@ namespace CallCenterTPC.Utilidades
             Usuario usuario = UsuarioActual();
 
             return usuario != null &&
-                   usuario.rolId == 4;
+                   usuario.rolId == 3;
         }
         public static bool EsAdminOCoordinador()
         {
             Usuario usuario = UsuarioActual();
 
             return usuario != null &&
-                   (usuario.rolId == 1 || usuario.rolId == 4);
+                   (usuario.rolId == 1 || usuario.rolId == 3);
         }
     }
 }

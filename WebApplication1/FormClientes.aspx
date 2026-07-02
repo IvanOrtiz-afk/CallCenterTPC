@@ -52,7 +52,7 @@
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                         <a href="Clientes.aspx" class="btn btn-outline-secondary">Cancelar</a>
                         
-                        <asp:Button ID="btnEliminar" runat="server" Text="Dar de Baja" CssClass="btn btn-danger me-auto" Visible="false" OnClick="btnEliminar_Click" />
+                        
                         
                         <asp:Button ID="btnGuardar" runat="server" Text="Guardar Cliente" CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
                     </div>

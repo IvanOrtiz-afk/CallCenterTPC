@@ -24,37 +24,68 @@ namespace CallCenterTPC
             }
         }
 
-        protected void btnEliminar_Click(object sender, EventArgs e)
+        private void CargarGrilla()
         {
-            LinkButton boton = (LinkButton)sender;
+            UsuarioRepositorio repo = new UsuarioRepositorio();
+            string filtro = txtBuscar.Text.Trim();
 
-            int id = int.Parse(boton.CommandArgument);
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                dgvUsuarios.DataSource = repo.Buscar(filtro);
+            }
+            else if (chkVerInactivos.Checked)
+            {
+                dgvUsuarios.DataSource = repo.Listar();
+            }
+            else
+            {
+                dgvUsuarios.DataSource = repo.ListarActivos();
+            }
+
+            dgvUsuarios.DataBind();
+        }
+
+        protected void chkVerInactivos_CheckedChanged(object sender, EventArgs e)
+        {
+            CargarGrilla();
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            CargarGrilla();
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "";
+            CargarGrilla();
+        }
+
+        protected void lnkConfirmarCambioEstado_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(hfIdSeleccionado.Value);
 
             Usuario usuarioActual = SeguridadHelper.UsuarioActual();
 
             if (usuarioActual.id == id)
             {
-                AlertaHelper.MostrarAlerta(
-                    pnlMensaje,
-                    lblMensaje,
-                    "No puedes darte de baja a tí mismo.", //sino un Admin podria darse de baja a el mismo (Buena practica)
-                    true);
-
+                AlertaHelper.MostrarAlerta(pnlMensaje, lblMensaje, "No puedes darte de baja a tí mismo.", true);
                 return;
             }
 
             UsuarioRepositorio repo = new UsuarioRepositorio();
+            Usuario usuarioTarget = repo.ObtenerPorId(id);
 
-            repo.Eliminar(id);
+            if (usuarioTarget != null)
+            {
+                bool nuevoEstado = !usuarioTarget.activo;
+                repo.CambiarEstado(id, nuevoEstado);
 
-            CargarGrilla();
-        }
+                string accion = nuevoEstado ? "reactivado" : "dado de baja";
+                Session["MensajeExito"] = $"¡El usuario fue {accion} correctamente!";
 
-        private void CargarGrilla()
-        {
-            // Asumo que tu UsuarioRepositorio tiene un método Listar()
-            dgvUsuarios.DataSource = new UsuarioRepositorio().Listar();
-            dgvUsuarios.DataBind();
+                Response.Redirect("Usuarios.aspx", false);
+            }
         }
     }
 }

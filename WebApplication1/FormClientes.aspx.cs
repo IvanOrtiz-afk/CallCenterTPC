@@ -20,7 +20,6 @@ namespace CallCenterTPC
                 if (Request.QueryString["id"] != null)
                 {
                     lblTitulo.Text = "Modificar Cliente";
-                    btnEliminar.Visible = true;
 
                     int id = int.Parse(Request.QueryString["id"]);
                     ClienteRepositorio repo = new ClienteRepositorio();
@@ -35,15 +34,9 @@ namespace CallCenterTPC
                         txtTelefono.Text = clienteSeleccionado.telefono.ToString();
                         txtEmail.Text = clienteSeleccionado.email;
 
-                   
+                        // BLINDAJE DE SEGURIDAD (SOLO LECTURA)
                         if (clienteSeleccionado.activo)
                         {
-                          
-                            btnEliminar.Text = "Dar de baja";
-                            btnEliminar.CssClass = "btn btn-danger";
-
-                            btnEliminar.OnClientClick = "return confirm('¿Está seguro que desea dar de baja a este cliente?');";
-
                             btnGuardar.Visible = true;
                             txtNombre.Enabled = true;
                             txtApellido.Enabled = true;
@@ -53,12 +46,6 @@ namespace CallCenterTPC
                         }
                         else
                         {
-                         
-                            btnEliminar.Text = "Reactivar cliente";
-                            btnEliminar.CssClass = "btn btn-success";
-
-                            btnEliminar.OnClientClick = "return confirm('¿Está seguro que desea reactivar a este cliente?');";
-
                             btnGuardar.Visible = false;
                             txtNombre.Enabled = false;
                             txtApellido.Enabled = false;
@@ -158,7 +145,7 @@ namespace CallCenterTPC
                     clienteModificado.documento = documento;
                     clienteModificado.telefono = telefono;
 
-                    
+                    // Clave: Mantenemos el estado que ya tenía el cliente para no pisarlo
                     clienteModificado.activo = clienteOriginal.activo;
 
                     repo.Actualizar(clienteModificado);
@@ -202,39 +189,6 @@ namespace CallCenterTPC
             {
                 pnlError.Visible = true;
                 lblError.Text = "Ocurrió un problema al guardar: " + ex.Message;
-            }
-        }
-
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (Request.QueryString["id"] != null)
-                {
-                    int id = int.Parse(Request.QueryString["id"]);
-                    ClienteRepositorio repo = new ClienteRepositorio();
-
-                   
-                    Cliente clienteTarget = repo.Listar().Find(x => x.id == id);
-
-                    if (clienteTarget != null)
-                    {
-                       
-                        clienteTarget.activo = !clienteTarget.activo;
-
-                        
-                        repo.Actualizar(clienteTarget);
-
-                        string accion = clienteTarget.activo ? "reactivado" : "dado de baja";
-                        Session["MensajeExito"] = $"¡El cliente fue {accion} correctamente!";
-                        Response.Redirect("Clientes.aspx", false);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                pnlError.Visible = true;
-                lblError.Text = "Ocurrió un problema al cambiar el estado: " + ex.Message;
             }
         }
     }

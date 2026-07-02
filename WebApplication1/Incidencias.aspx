@@ -13,7 +13,18 @@
             </a>
         </div>
     </div>
-
+    <div class="row mb-3">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-text bg-white">
+                <span class="material-symbols-outlined" style="font-size: 18px;">search</span>
+            </span>
+            <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" placeholder="Buscar por N° de ticket o cliente..."></asp:TextBox>
+            <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary" OnClick="btnBuscar_Click" />
+            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-outline-secondary" OnClick="btnLimpiar_Click" />
+        </div>
+    </div>
+</div>
       <asp:Panel ID="pnlMensaje" runat="server" Visible="false">
      <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

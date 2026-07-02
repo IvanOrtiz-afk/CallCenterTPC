@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Gestión de Clientes" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Clientes.aspx.cs" Inherits="CallCenterTPC.Clientes" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    
+
     <div class="row align-items-center mt-4 mb-4">
         <div class="col-md-6">
             <h3><span class="material-symbols-outlined align-text-bottom me-2">group</span>Clientes</h3>
@@ -15,39 +15,12 @@
     </div>
 
     <asp:Panel ID="pnlMensaje" runat="server" Visible="false">
-     <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
-     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </asp:Panel>
 
     <div class="card shadow-sm">
         <div class="card-body p-0">
-
-            <asp:CheckBox ID="chkVerInactivos" runat="server" Text=" Mostrar clientes inactivos" AutoPostBack="true" OnCheckedChanged="chkVerInactivos_CheckedChanged" CssClass="mb-3" />
-           <asp:GridView ID="dgvClientes" runat="server" 
-    AllowPaging="True" 
-    PageSize="10" 
-    OnPageIndexChanging="dgvClientes_PageIndexChanging"
-    CssClass="table table-striped table-hover mb-0" 
-    AutoGenerateColumns="False">
-    
-    <HeaderStyle CssClass="table-dark" />
-  
-    <PagerStyle HorizontalAlign="Center" CssClass="PaginadorBootstrap" />
-    
-    <Columns>
-        <asp:BoundField DataField="id" HeaderText="ID" />
-        <asp:BoundField DataField="nombre" HeaderText="Nombre" />
-        <asp:BoundField DataField="apellido" HeaderText="Apellido" />
-        <asp:BoundField DataField="documento" HeaderText="Documento" />
-        <asp:BoundField DataField="email" HeaderText="Email" />
-        <asp:BoundField DataField="estadoTexto" HeaderText="Estado" />
-                  
-        <asp:TemplateField HeaderText="Acciones">
-            <ItemTemplate>
-                <a href="FormClientes.aspx?id=<%# Eval("id") %>" class="btn btn-warning btn-sm">Modificar</a>
-            </ItemTemplate>
-        </asp:TemplateField>
-
             <div class="p-3 border-bottom">
                 <div class="row align-items-center">
                     <div class="col-md-6 mb-2 mb-md-0">
@@ -66,9 +39,16 @@
                 </div>
             </div>
 
-           
-                <HeaderStyle CssClass="table-dark" /> 
-            <asp:GridView ID="dgvClientes" runat="server" CssClass="table table-striped table-hover mb-0" AutoGenerateColumns="False">
+            <asp:GridView ID="dgvClientes" runat="server"
+                AllowPaging="True"
+                PageSize="10"
+                OnPageIndexChanging="dgvClientes_PageIndexChanging"
+                CssClass="table table-striped table-hover mb-0"
+                AutoGenerateColumns="False">
+
+                <HeaderStyle CssClass="table-dark" />
+                <PagerStyle HorizontalAlign="Center" CssClass="PaginadorBootstrap" />
+
                 <Columns>
                     <asp:BoundField DataField="id" HeaderText="ID" />
                     <asp:BoundField DataField="nombre" HeaderText="Nombre" />
@@ -79,9 +59,9 @@
 
                     <asp:TemplateField HeaderText="Acciones">
                         <ItemTemplate>
-                            <asp:HyperLink ID="hlModificar" runat="server" 
-                                NavigateUrl='<%# "FormClientes.aspx?id=" + Eval("id") %>' 
-                                CssClass="btn btn-warning btn-sm me-1" 
+                            <asp:HyperLink ID="hlModificar" runat="server"
+                                NavigateUrl='<%# "FormClientes.aspx?id=" + Eval("id") %>'
+                                CssClass="btn btn-warning btn-sm me-1"
                                 Visible='<%# Convert.ToBoolean(Eval("activo")) %>'>
                                 Modificar
                             </asp:HyperLink>
@@ -95,8 +75,8 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-    </Columns>
-</asp:GridView>
+                </Columns>
+            </asp:GridView>
         </div>
     </div>
 

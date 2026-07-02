@@ -45,6 +45,12 @@ namespace CallCenterTPC
             dgvUsuarios.DataBind();
         }
 
+        protected void dgvUsuarios_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            dgvUsuarios.PageIndex = e.NewPageIndex;
+            CargarGrilla();
+        }
+
         protected void chkVerInactivos_CheckedChanged(object sender, EventArgs e)
         {
             CargarGrilla();
@@ -84,22 +90,8 @@ namespace CallCenterTPC
                 string accion = nuevoEstado ? "reactivado" : "dado de baja";
                 Session["MensajeExito"] = $"¡El usuario fue {accion} correctamente!";
 
-        private void CargarGrilla()
-        {
-           
-            dgvUsuarios.DataSource = new UsuarioRepositorio().Listar();
-            dgvUsuarios.DataBind();
-
                 Response.Redirect("Usuarios.aspx", false);
             }
-
-        }
-
-        protected void dgvUsuarios_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-           
-            dgvUsuarios.PageIndex = e.NewPageIndex;
-            CargarGrilla();
         }
     }
 }

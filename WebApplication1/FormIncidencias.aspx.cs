@@ -139,12 +139,10 @@ namespace CallCenterTPC
                 if (Request.QueryString["id"] != null)
                 {
                     incidenciaActual.id = int.Parse(Request.QueryString["id"]);
-                    incidenciaActual.usuarioAsignadoId = usuario.id;
-                    incidenciaActual.estadoId = 2;
 
-                    repo.Modificar(incidenciaActual);
+                    repo.ModificarDatos(incidenciaActual);
 
-                    AlertaHelper.GuardarMensajeExito("La incidencia fue actualizada y pasó al estado 'En Análisis'.");
+                    AlertaHelper.GuardarMensajeExito("La incidencia fue actualizada correctamente.");
                 }
                 else
                 {

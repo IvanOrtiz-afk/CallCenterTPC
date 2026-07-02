@@ -18,13 +18,22 @@
 
     <div class="card shadow-sm">
         <div class="card-body p-0">
-            <asp:GridView ID="dgvPrioridades" runat="server" CssClass="table table-striped table-hover mb-0" AutoGenerateColumns="False">
-                <HeaderStyle CssClass="table-dark" />
-                <Columns>
-                    <asp:BoundField DataField="id" HeaderText="ID" />
-                    <asp:BoundField DataField="nombre" HeaderText="Nombre de Prioridad" />
-                </Columns>
-            </asp:GridView>
+           <asp:GridView ID="dgvPrioridades" runat="server" 
+    AllowPaging="True" 
+    PageSize="10" 
+    OnPageIndexChanging="dgvPrioridades_PageIndexChanging"
+    CssClass="table table-striped table-hover mb-0" 
+    AutoGenerateColumns="False">
+    
+    <HeaderStyle CssClass="table-dark" />
+    
+    <PagerStyle HorizontalAlign="Center" CssClass="PaginadorBootstrap" />
+    
+    <Columns>
+        <asp:BoundField DataField="id" HeaderText="ID" />
+        <asp:BoundField DataField="nombre" HeaderText="Nombre de Prioridad" />
+    </Columns>
+</asp:GridView>
         </div>
     </div>
 </asp:Content>

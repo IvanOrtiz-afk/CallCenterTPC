@@ -71,7 +71,7 @@ CREATE TABLE [clientes] (
 	[id] INT NOT NULL IDENTITY UNIQUE,
 	[nombre] VARCHAR(225),
 	[apellido] VARCHAR(225),
-	[documento] INT,
+	[documento] INT NOT NULL UNIQUE,
 	[email] VARCHAR(225),
 	[telefono] INT,
 	[activo] BIT,

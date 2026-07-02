@@ -21,6 +21,33 @@
 
     <div class="card shadow-sm">
         <div class="card-body p-0">
+
+            <asp:CheckBox ID="chkVerInactivos" runat="server" Text=" Mostrar clientes inactivos" AutoPostBack="true" OnCheckedChanged="chkVerInactivos_CheckedChanged" CssClass="mb-3" />
+           <asp:GridView ID="dgvClientes" runat="server" 
+    AllowPaging="True" 
+    PageSize="10" 
+    OnPageIndexChanging="dgvClientes_PageIndexChanging"
+    CssClass="table table-striped table-hover mb-0" 
+    AutoGenerateColumns="False">
+    
+    <HeaderStyle CssClass="table-dark" />
+  
+    <PagerStyle HorizontalAlign="Center" CssClass="PaginadorBootstrap" />
+    
+    <Columns>
+        <asp:BoundField DataField="id" HeaderText="ID" />
+        <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+        <asp:BoundField DataField="apellido" HeaderText="Apellido" />
+        <asp:BoundField DataField="documento" HeaderText="Documento" />
+        <asp:BoundField DataField="email" HeaderText="Email" />
+        <asp:BoundField DataField="estadoTexto" HeaderText="Estado" />
+                  
+        <asp:TemplateField HeaderText="Acciones">
+            <ItemTemplate>
+                <a href="FormClientes.aspx?id=<%# Eval("id") %>" class="btn btn-warning btn-sm">Modificar</a>
+            </ItemTemplate>
+        </asp:TemplateField>
+
             <div class="p-3 border-bottom">
                 <div class="row align-items-center">
                     <div class="col-md-6 mb-2 mb-md-0">
@@ -68,8 +95,8 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                </Columns>
-            </asp:GridView>
+    </Columns>
+</asp:GridView>
         </div>
     </div>
 

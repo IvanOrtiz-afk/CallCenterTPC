@@ -14,10 +14,34 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body p-0"> <asp:GridView ID="dgvTiposIncidencia" runat="server" 
+    AllowPaging="True" 
+    PageSize="10" 
+    OnPageIndexChanging="dgvTiposIncidencia_PageIndexChanging"
+    CssClass="table table-striped table-hover mb-0" 
+    AutoGenerateColumns="False" 
+    GridLines="None" 
+    EmptyDataText="No hay tipos de incidencia registrados.">
+    
+    <HeaderStyle CssClass="table-dark" />
+    
+    <PagerStyle HorizontalAlign="Center" CssClass="PaginadorBootstrap" />
+    
+    <Columns>
+        <asp:BoundField DataField="id" HeaderText="ID" ItemStyle-Width="10%" />
+        <asp:BoundField DataField="nombre" HeaderText="Nombre del Tipo de Incidencia" />
+    </Columns>
+
+</asp:GridView>
+
     <asp:Panel ID="pnlMensaje" runat="server" Visible="false">
         <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </asp:Panel>
+
 
     <div class="card shadow-sm">
         <div class="card-body p-0">

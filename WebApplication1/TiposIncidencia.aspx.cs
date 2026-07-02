@@ -1,6 +1,7 @@
 ﻿using CallCenterTPC.Datos;
 using CallCenterTPC.Utilidades;
 using System;
+using System.Web.UI.WebControls;
 
 namespace CallCenterTPC
 {
@@ -44,6 +45,13 @@ namespace CallCenterTPC
 
             dgvTiposIncidencia.DataSource = repo.Listar();
             dgvTiposIncidencia.DataBind();
+        }
+
+        protected void dgvTiposIncidencia_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            
+            dgvTiposIncidencia.PageIndex = e.NewPageIndex;
+            CargarGrilla();
         }
     }
 }

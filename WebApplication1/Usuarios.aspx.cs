@@ -1,4 +1,4 @@
-﻿using CallCenterTPC.Datos;
+using CallCenterTPC.Datos;
 using CallCenterTPC.Dominio;
 using CallCenterTPC.Utilidades;
 using System;
@@ -84,8 +84,22 @@ namespace CallCenterTPC
                 string accion = nuevoEstado ? "reactivado" : "dado de baja";
                 Session["MensajeExito"] = $"¡El usuario fue {accion} correctamente!";
 
+        private void CargarGrilla()
+        {
+           
+            dgvUsuarios.DataSource = new UsuarioRepositorio().Listar();
+            dgvUsuarios.DataBind();
+
                 Response.Redirect("Usuarios.aspx", false);
             }
+
+        }
+
+        protected void dgvUsuarios_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+           
+            dgvUsuarios.PageIndex = e.NewPageIndex;
+            CargarGrilla();
         }
     }
 }

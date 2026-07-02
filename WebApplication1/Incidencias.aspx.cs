@@ -44,6 +44,14 @@ namespace CallCenterTPC
             }
         }
 
+        protected void dgvIncidencias_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+           
+            dgvIncidencias.PageIndex = e.NewPageIndex;
+
+            CargarGrilla();
+        }
+
         protected void dgvIncidencias_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             

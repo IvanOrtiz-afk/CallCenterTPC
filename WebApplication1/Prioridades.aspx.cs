@@ -32,5 +32,20 @@ namespace CallCenterTPC
             }
 
         }
+
+        protected void dgvPrioridades_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            
+            dgvPrioridades.PageIndex = e.NewPageIndex;
+            CargarGrilla();
+        }
+
+        private void CargarGrilla()
+        {
+            PrioridadRepositorio repo = new PrioridadRepositorio();
+
+            dgvPrioridades.DataSource = repo.Listar();
+            dgvPrioridades.DataBind();
+        }
     }
 }

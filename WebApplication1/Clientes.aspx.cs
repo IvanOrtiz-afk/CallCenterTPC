@@ -1,8 +1,15 @@
+
+﻿using CallCenterTPC.Datos;
+using CallCenterTPC.Utilidades;
+using System;
+using System.Web.UI.WebControls;
+
 ﻿using System;
 using System.Web.UI.WebControls;
 using CallCenterTPC.Utilidades;
 using CallCenterTPC.Datos;
 using CallCenterTPC.Dominio;
+
 
 namespace CallCenterTPC
 {
@@ -35,15 +42,29 @@ namespace CallCenterTPC
             }
             else if (chkVerInactivos != null && chkVerInactivos.Checked)
             {
+
+               
                 dgvClientes.DataSource = repo.Listar();
             }
             else
             {
+
                 dgvClientes.DataSource = repo.ObtenerTodos();
             }
 
             dgvClientes.DataBind();
         }
+
+
+        protected void dgvClientes_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+           
+            dgvClientes.PageIndex = e.NewPageIndex;
+
+          
+            CargarGrilla();
+        }
+
 
         protected void chkVerInactivos_CheckedChanged(object sender, EventArgs e)
         {

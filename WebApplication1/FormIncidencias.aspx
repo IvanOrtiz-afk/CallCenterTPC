@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="Default.aspx" class="btn btn-outline-secondary">Cancelar</a>
+                        <a href="Incidencias.aspx" class="btn btn-outline-secondary">Cancelar</a>
                         <asp:Button ID="btnGuardar" runat="server" Text="Guardar Incidencia" CssClass="btn btn-danger" OnClick="btnGuardar_Click" />
                     </div>
 

@@ -62,12 +62,12 @@
         runat="server"
         CssClass="text-white me-3" />
 
-    <asp:Button
-        ID="btnSalir"
-        runat="server"
-        Text="Salir"
-        CssClass="btn btn-outline-light btn-sm"
-        OnClick="btnSalir_Click" />
+   <asp:LinkButton
+    ID="btnSalir"
+    runat="server"
+    Text="Salir"
+    CssClass="btn btn-outline-light btn-sm"
+    OnClick="btnSalir_Click" />
 </div>
   <div class="container">
     <a class="navbar-brand" runat="server" href="~/Default.aspx">Call Center TPC</a>

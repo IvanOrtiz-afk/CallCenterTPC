@@ -28,12 +28,12 @@ namespace CallCenterTPC
                         rol = "Administrador";
                         break;
 
-                    case 3:
+                    case 2:
                         rol = "Agente";
                         break;
 
-                    case 4:
-                        rol = "Coordinador";
+                    case 3:
+                        rol = "Supervisor";
                         break;
                 }
 

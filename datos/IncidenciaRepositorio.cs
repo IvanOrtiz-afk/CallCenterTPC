@@ -263,6 +263,41 @@ namespace CallCenterTPC.Datos
             }
         }
 
+        public void ModificarDatos(Incidencia incidencia)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+            UPDATE incidencias
+            SET
+                cliente_id = @clienteId,
+                tipo_incidencia_id = @tipoIncidenciaId,
+                prioridad_id = @prioridadId,
+                asunto = @asunto,
+                descripcion = @descripcion
+            WHERE id = @id");
+
+                datos.setearParametro("@id", incidencia.id);
+                datos.setearParametro("@clienteId", incidencia.clienteId);
+                datos.setearParametro("@tipoIncidenciaId", incidencia.tipoIncidenciaId);
+                datos.setearParametro("@prioridadId", incidencia.prioridadId);
+                datos.setearParametro("@asunto", incidencia.asunto);
+                datos.setearParametro("@descripcion", incidencia.descripcion);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al modificar la incidencia: " + ex.Message);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public void ActualizarAsignacion(int idIncidencia, int idAgente)
         {
             AccesoDatos datos = new AccesoDatos();

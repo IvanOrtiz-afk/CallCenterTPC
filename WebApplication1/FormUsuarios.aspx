@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="d-grid d-md-flex justify-content-md-end">
-                        <a href="Default.aspx" class="btn btn-outline-secondary me-2">Cancelar</a>
+                      <a href="Usuarios.aspx" class="btn btn-outline-secondary me-2">Cancelar</a>
                         <asp:Button ID="btnGuardar" runat="server" Text="Guardar Usuario" CssClass="btn btn-dark" OnClick="btnGuardar_Click" />
                     </div>
                 </div>

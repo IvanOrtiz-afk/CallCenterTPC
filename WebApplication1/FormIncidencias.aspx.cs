@@ -4,6 +4,7 @@ using CallCenterTPC.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Web.Services;
+using System.Web.UI.WebControls;
 
 
 namespace CallCenterTPC
@@ -83,7 +84,20 @@ namespace CallCenterTPC
                     txtAsunto.Text = inc.asunto;
                     txtDescripcion.Text = inc.descripcion;
 
-                    ddlClientes.SelectedValue = inc.clienteId.ToString();
+                    txtBuscarCliente.Text = inc.cliente.nombre;
+
+                    ListItem itemCliente = ddlClientes.Items.FindByValue(inc.clienteId.ToString());
+                    if (itemCliente != null)
+                    {
+                        ddlClientes.SelectedValue = inc.clienteId.ToString();
+                    }
+                    else
+                    {
+                        
+                        ddlClientes.Items.Insert(0, new ListItem(inc.cliente.nombre + " (inactivo)", inc.clienteId.ToString()));
+                        ddlClientes.SelectedValue = inc.clienteId.ToString();
+                    }
+
                     ddlTipos.SelectedValue = inc.tipoIncidenciaId.ToString();
                     ddlPrioridades.SelectedValue = inc.prioridadId.ToString();
                 }
@@ -94,6 +108,7 @@ namespace CallCenterTPC
             }
         }
 
+        
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             try
